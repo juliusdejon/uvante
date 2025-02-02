@@ -1,10 +1,12 @@
 {
   "name": "uvante",
   "version": "1.0.0",
+  "description": "**Front-end Developer (React Native) - Technical Assignment**",
   "main": "index.ts",
   "scripts": {
     "start": "expo start",
     "android": "expo start --android",
+    "server": "node api/server.js",
     "ios": "expo start --ios",
     "web": "expo start --web"
   },
