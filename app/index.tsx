@@ -1,8 +1,9 @@
 import { useNavigation } from 'expo-router';
-import { SafeAreaView } from 'react-native';
+import { View, Text } from 'react-native';
 import { useEffect } from 'react';
-import Home from '../screens/Home';
-
+import Map from '../components/map';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import BottomSheet from '../components/bottom-sheet';
 
 export default function App() {
   const navigation = useNavigation();
@@ -12,8 +13,9 @@ export default function App() {
   }, [navigation]);
 
   return (
-    <SafeAreaView style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Home />
-    </SafeAreaView>
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <Map />
+      <BottomSheet />
+    </GestureHandlerRootView>
   );
 }
