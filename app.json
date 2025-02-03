@@ -30,6 +30,12 @@
     "plugins": [
       "expo-router",
       [
+        "@rnmapbox/maps",
+        {
+          "RNMapboxMapsDownloadToken": "sk.eyJ1IjoianVsaXVzZGVqb24iLCJhIjoiY202b3dtYXpwMHhtcjJqcThtaTQwdnB6byJ9.Rj9H_J1HfOVwhutwyLmLxw"
+        }
+      ],
+      [
         "expo-location",
         {
           "locationWhenInUsePermission": "Show current location on map."
