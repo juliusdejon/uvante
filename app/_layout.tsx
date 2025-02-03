@@ -12,7 +12,7 @@ export default function Layout() {
           fontWeight: 'bold',
         },
       }}>
-      <Stack.Screen name="home" options={{}} />
+      {/* <Stack.Screen name="home" options={{}} /> */}
     </Stack>
   );
 }
