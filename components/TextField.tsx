@@ -1,7 +1,6 @@
 import { TextInput, TextInputProps } from 'react-native'
 import React from 'react'
 
-
 interface TextFieldProps extends TextInputProps {
   textFieldRef: React.LegacyRef<TextInput>;
 }

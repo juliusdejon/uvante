@@ -1,8 +1,9 @@
 import { View } from 'react-native'
 import React from 'react'
 import Mapbox from '@rnmapbox/maps';
+import Config from 'config';
 
-Mapbox.setAccessToken('pk.eyJ1IjoianVsaXVzZGVqb24iLCJhIjoiY202b3YwcHVlMHRyNTJscTBkYW96bDI4MyJ9.DE9eY_MiUPSbRMsuI7b28g');
+Mapbox.setAccessToken(Config.MAP_BOX_ACCESS_TOKEN);
 
 
 const Map = () => {
