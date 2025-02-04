@@ -1,5 +1,5 @@
 import { useNavigation } from 'expo-router';
-import { View, Text } from 'react-native';
+import { View, Text, SafeAreaView } from 'react-native';
 import { useEffect } from 'react';
 import Map from '../components/map';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
@@ -14,13 +14,8 @@ export default function App() {
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
-      <View style={{ flex: 2 }}>
-        <Map />
-      </View>
-      <View style={{ flex: 1 }}>
-        <BottomSheet />
-      </View>
+      <Map />
+      <BottomSheet />
     </GestureHandlerRootView>
-
   );
 }

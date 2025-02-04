@@ -1,5 +1,5 @@
 import React, { useCallback, useRef, useState, useMemo } from 'react';
-import { Text, StyleSheet, TextInput } from 'react-native';
+import { Text, TextInput } from 'react-native';
 import GorHomBottomSheet, { BottomSheetView } from '@gorhom/bottom-sheet';
 
 enum BottomSheetEnum {
@@ -38,32 +38,25 @@ const BottomSheet = () => {
       index={Number(bottomSheetIndex)}
       onChange={handleSheetChanges}
     >
-      <BottomSheetView style={styles.contentContainer}>
-        <Text className='text-2xl'>Nice to see you, Julius</Text>
+      <BottomSheetView
+        style={{ flex: 1, padding: 24, gap: 2 }}
+      >
+        <Text className='text-md'>Hey Julius</Text>
+        <Text className='text-2xl font-bold'>Where are you going?</Text>
         <TextInput
-          className='bg-gray-100'
-          placeholder="Where are you going?"
-          style={styles.input}
+          className='border rounded-lg border-1 border-gray-300 mt-4 bg-white text-lg p-4 pb-6 font-medium'
+          placeholder='Enter destination'
+          placeholderTextColor='#A0A0A0'
           onChangeText={setText}
           value={text}
           onTouchEnd={handleTouchEnd}
         />
       </BottomSheetView>
+
     </GorHomBottomSheet>
   );
 };
 
-const styles = StyleSheet.create({
-  input: {
-    height: 40,
-    borderWidth: 1,
-    padding: 10,
-  },
-  contentContainer: {
-    flex: 1,
-    padding: 36,
-    paddingTop: 12,
-  },
-});
+
 
 export default BottomSheet;
