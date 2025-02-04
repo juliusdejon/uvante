@@ -25,6 +25,7 @@
       "package": "com.juliusdejon.uvante"
     },
     "web": {
+      "bundler": "metro",
       "favicon": "./assets/favicon.png"
     },
     "plugins": [
