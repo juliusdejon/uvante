@@ -15,6 +15,7 @@
     "@gorhom/bottom-sheet": "^5",
     "@rnmapbox/maps": "^10.1.33",
     "@tanstack/react-query": "^5.66.0",
+    "axios": "^1.7.9",
     "expo": "~52.0.29",
     "expo-app-loading": "^2.1.1",
     "expo-constants": "~17.0.5",

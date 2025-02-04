@@ -1,21 +1,7 @@
-import { useNavigation } from 'expo-router';
-import { useEffect } from 'react';
-import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import { Redirect } from "expo-router";
 
-import Map from 'components/map';
-import BookRide from 'containers/book-ride';
+const App = () => {
+  return <Redirect href="/home" />;
+};
 
-export default function App() {
-  const navigation = useNavigation();
-
-  useEffect(() => {
-    navigation.setOptions({ headerShown: false });
-  }, [navigation]);
-
-  return (
-    <GestureHandlerRootView style={{ flex: 1 }}>
-      <Map />
-      <BookRide />
-    </GestureHandlerRootView>
-  );
-}
+export default App;

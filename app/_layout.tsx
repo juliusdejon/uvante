@@ -1,4 +1,11 @@
 import { Stack } from 'expo-router';
+import {
+  QueryClient,
+  QueryClientProvider,
+  useQuery,
+} from '@tanstack/react-query'
+
+const queryClient = new QueryClient()
 import "../global.css";
 import {
   useFonts,
@@ -19,22 +26,16 @@ export default function Layout() {
   });
 
   if (!fontsLoaded) {
-    return null; // Optionally, add a loading indicator
+    return null;
   }
 
 
   return (
-    <Stack
-      screenOptions={{
-        headerStyle: {
-          backgroundColor: '#f4511e',
-        },
-        headerTintColor: '#fff',
-        headerTitleStyle: {
-          fontWeight: 'bold',
-        },
-      }}>
-      {/* <Stack.Screen name="home" options={{}} /> */}
-    </Stack>
+    <QueryClientProvider client={queryClient}>
+
+      <Stack>
+        <Stack.Screen name="home" options={{}} />
+      </Stack>
+    </QueryClientProvider>
   );
 }

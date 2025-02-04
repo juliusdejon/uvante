@@ -1,5 +1,4 @@
-import React, { useCallback, useRef, useState, ReactNode, Ref, } from 'react';
-import { Text, TextInput } from 'react-native';
+import React, { ReactNode, Ref, } from 'react';
 import GorHomBottomSheet, { BottomSheetView } from '@gorhom/bottom-sheet';
 import { BottomSheetMethods } from '@gorhom/bottom-sheet/lib/typescript/types';
 
@@ -21,7 +20,7 @@ const BottomSheet = (props: BottomSheetProps) => {
       onChange={onChange}
     >
       <BottomSheetView
-        style={{ flex: 1, padding: 24, gap: 2 }}
+        className='flex p-8 gap-2'
       >
         {children}
       </BottomSheetView>
