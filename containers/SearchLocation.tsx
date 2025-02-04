@@ -5,7 +5,7 @@ import TextField from 'components/TextField';
 import useDebounce from 'hooks/useDebounce';
 import Config from 'config';
 
-interface SearchAddressProps {
+interface SearchLocationProps {
   placeholder: string;
   onTouchEnd: () => void;
 }
@@ -15,11 +15,11 @@ interface Place {
   place_name: string;
 }
 
-const SearchAddress: React.FC<SearchAddressProps> = (props) => {
+const SearchLocation: React.FC<SearchLocationProps> = (props) => {
   const { placeholder, onTouchEnd } = props;
-  const [address, setAddress] = useState<string>('');
+  const [location, setLocation] = useState<string>('');
   const [results, setResults] = useState<Place[]>([]);
-  const debouncedAddress = useDebounce(address, 500);
+  const debouncedLocation = useDebounce(location, 500);
   const [placeSelected, setPlaceSelected] = useState<boolean>(false);
   const textFieldRef = useRef<any>(null);
 
@@ -42,11 +42,11 @@ const SearchAddress: React.FC<SearchAddressProps> = (props) => {
   };
 
   useEffect(() => {
-    fetchResults(debouncedAddress);
-  }, [debouncedAddress]);
+    fetchResults(debouncedLocation);
+  }, [debouncedLocation]);
 
   const onSelectPlace = (item: Place) => {
-    setAddress(item.place_name);
+    setLocation(item.place_name);
     setResults([]);
     setPlaceSelected(true);
     if (textFieldRef.current) {
@@ -64,9 +64,9 @@ const SearchAddress: React.FC<SearchAddressProps> = (props) => {
     <View>
       <TextField
         textFieldRef={textFieldRef}
-        value={address}
+        value={location}
         onChangeText={(text: string) => {
-          setAddress(text);
+          setLocation(text);
           setPlaceSelected(false);
         }}
         onTouchEnd={onTouchEnd}
@@ -85,4 +85,4 @@ const SearchAddress: React.FC<SearchAddressProps> = (props) => {
   );
 };
 
-export default SearchAddress;
+export default SearchLocation;

@@ -1,7 +1,7 @@
 import React, { useState, useCallback, useRef } from 'react';
 import { View, Text } from 'react-native';
 import BottomSheet from 'components/BottomSheet';
-import SearchAddress from './SearchAddress';
+import SearchLocation from './SearchLocation';
 
 const BookRide = () => {
   const bottomSheetRef = useRef(null);
@@ -22,12 +22,12 @@ const BookRide = () => {
       <View className="w-full flex flex-col">
         <Text className="font-primary text-md">Hey Julius</Text>
         <Text className="font-primary-bold text-2xl font-bold">Where are you going?</Text>
-        <SearchAddress
+        <SearchLocation
           placeholder="Enter pickup"
           onTouchEnd={handleTouchEnd}
         />
-        <SearchAddress
-          placeholder="Enter destination"
+        <SearchLocation
+          placeholder="Enter drop-off"
           onTouchEnd={handleTouchEnd}
         />
 
