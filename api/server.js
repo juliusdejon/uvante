@@ -9,6 +9,7 @@ let rideRequests = []
 
 // Get available drivers
 app.get('/drivers', (req, res) => {
+	console.log(drivers)
 	res.json(drivers.filter((driver) => driver.available))
 })
 

@@ -13,6 +13,8 @@ export default function App() {
     navigation.setOptions({ headerShown: false });
   }, [navigation]);
 
+
+
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <Map />

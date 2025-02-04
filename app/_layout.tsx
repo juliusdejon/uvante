@@ -1,12 +1,12 @@
 import { Stack } from 'expo-router';
+
 import {
   QueryClient,
   QueryClientProvider,
-  useQuery,
 } from '@tanstack/react-query'
 
-const queryClient = new QueryClient()
-import "../global.css";
+import { AppProvider } from 'contexts/AppContext';
+
 import {
   useFonts,
   Poppins_400Regular,
@@ -15,6 +15,10 @@ import {
   Poppins_700Bold,
   Poppins_900Black,
 } from '@expo-google-fonts/poppins';
+
+import "../global.css";
+
+const queryClient = new QueryClient()
 
 export default function Layout() {
   const [fontsLoaded] = useFonts({
@@ -32,10 +36,11 @@ export default function Layout() {
 
   return (
     <QueryClientProvider client={queryClient}>
-
-      <Stack>
-        <Stack.Screen name="home" options={{}} />
-      </Stack>
+      <AppProvider>
+        <Stack>
+          <Stack.Screen name="home" options={{}} />
+        </Stack>
+      </AppProvider>
     </QueryClientProvider>
   );
 }

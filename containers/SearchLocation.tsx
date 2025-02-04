@@ -5,18 +5,20 @@ import TextField from 'components/TextField';
 import useDebounce from 'hooks/useDebounce';
 import Config from 'config';
 
+import { Place, Coordinate } from 'types/types';
+
 interface SearchLocationProps {
   placeholder: string;
+  setCoordinates: (coordinates: Coordinate) => void,
   onTouchEnd: () => void;
 }
 
-interface Place {
-  id: string;
-  place_name: string;
-}
-
 const SearchLocation: React.FC<SearchLocationProps> = (props) => {
-  const { placeholder, onTouchEnd } = props;
+  const {
+    setCoordinates,
+    placeholder,
+    onTouchEnd
+  } = props;
   const [location, setLocation] = useState<string>('');
   const [results, setResults] = useState<Place[]>([]);
   const debouncedLocation = useDebounce(location, 500);
@@ -47,6 +49,7 @@ const SearchLocation: React.FC<SearchLocationProps> = (props) => {
 
   const onSelectPlace = (item: Place) => {
     setLocation(item.place_name);
+    setCoordinates(item.center);
     setResults([]);
     setPlaceSelected(true);
     if (textFieldRef.current) {
