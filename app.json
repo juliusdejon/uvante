@@ -22,7 +22,11 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.juliusdejon.uvante"
+      "package": "com.juliusdejon.uvante",
+      "permissions": [
+        "android.permission.ACCESS_COARSE_LOCATION",
+        "android.permission.ACCESS_FINE_LOCATION"
+      ]
     },
     "web": {
       "bundler": "metro",
@@ -42,6 +46,14 @@
           "locationWhenInUsePermission": "Show current location on map."
         }
       ]
-    ]
+    ],
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "a619642c-d70c-43a6-a7d6-78da2434a933"
+      }
+    }
   }
 }
