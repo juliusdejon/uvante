@@ -5,6 +5,9 @@ const { drivers } = require('./data')
 
 app.use(express.json())
 
+// Middleware to parse URL-encoded bodies
+app.use(express.urlencoded({ extended: true }));
+
 let rideRequests = []
 
 // Get available drivers
@@ -31,6 +34,7 @@ app.get('/rides/:id', (req, res) => {
 // Request a new ride
 app.post('/rides', (req, res) => {
 	const { passenger, pickup, dropoff } = req.body
+	console.log(req);
 	if (!passenger || !pickup || !dropoff) {
 		return res.status(400).json({ message: 'Missing required fields' })
 	}
