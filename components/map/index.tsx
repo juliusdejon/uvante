@@ -7,9 +7,8 @@ Mapbox.setAccessToken('pk.eyJ1IjoianVsaXVzZGVqb24iLCJhIjoiY202b3YwcHVlMHRyNTJscT
 
 const Map = () => {
   return (
-    <View style={{ flex: 0.5, alignItems: 'center', justifyContent: 'center' }}>
-      <Mapbox.MapView className='flex' />
-
+    <View className='flex w-full'>
+      <Mapbox.MapView style={{ width: '100%', height: '100%' }} />
     </View>
   )
 }
