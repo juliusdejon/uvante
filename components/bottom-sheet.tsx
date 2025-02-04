@@ -41,10 +41,10 @@ const BottomSheet = () => {
       <BottomSheetView
         style={{ flex: 1, padding: 24, gap: 2 }}
       >
-        <Text className='text-md'>Hey Julius</Text>
-        <Text className='text-2xl font-bold'>Where are you going?</Text>
+        <Text className='font-primary text-md'>Hey Julius</Text>
+        <Text className='font-primary-bold text-2xl font-bold'>Where are you going?</Text>
         <TextInput
-          className='border rounded-lg border-1 border-gray-300 mt-4 bg-white text-lg p-4 pb-6 font-medium'
+          className='font-primary-medium border rounded-lg border-1 border-gray-300 mt-4 bg-white text-lg px-6 p-4 pb-6 font-medium shadow-sm'
           placeholder='Enter destination'
           placeholderTextColor='#A0A0A0'
           onChangeText={setText}

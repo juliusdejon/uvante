@@ -1,9 +1,9 @@
 import { useNavigation } from 'expo-router';
-import { View, Text, SafeAreaView } from 'react-native';
 import { useEffect } from 'react';
-import Map from '../components/map';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
-import BottomSheet from '../components/bottom-sheet';
+
+import Map from 'components/map';
+import BottomSheet from 'components/bottom-sheet';
 
 export default function App() {
   const navigation = useNavigation();

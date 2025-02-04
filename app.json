@@ -45,7 +45,8 @@
         {
           "locationWhenInUsePermission": "Show current location on map."
         }
-      ]
+      ],
+      "expo-font"
     ],
     "extra": {
       "router": {
