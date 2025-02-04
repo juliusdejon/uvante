@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 import Map from 'components/map';
-import BottomSheet from 'components/bottom-sheet';
+import BookRide from 'containers/book-ride';
 
 export default function App() {
   const navigation = useNavigation();
@@ -15,7 +15,7 @@ export default function App() {
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <Map />
-      <BottomSheet />
+      <BookRide />
     </GestureHandlerRootView>
   );
 }
