@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useRef, useContext } from 'react';
+import React, { useState, useCallback, useRef, useContext, useEffect } from 'react';
 import { View, Text, Button } from 'react-native';
 import BottomSheet from 'components/BottomSheet';
 import SearchLocation from './SearchLocation';
@@ -7,14 +7,18 @@ import { AppContext } from 'contexts/AppContext';
 const BookRide = () => {
   const bottomSheetRef = useRef(null);
   const [bottomSheetState, setBottomSheetState] = useState(1);
-  const { setPickUp, setDropOff } = useContext(AppContext);
+  const { pickUp, dropOff, setPickUp, setDropOff } = useContext(AppContext);
 
   const handleSheetChanges = useCallback((index: number) => {
     setBottomSheetState(index);
   }, []);
 
   const handleTouchEnd = () => setBottomSheetState(2);
-
+  useEffect(() => {
+    if (pickUp && dropOff) {
+      handleSheetChanges(1)
+    }
+  }, [pickUp, dropOff]);
   return (
     <BottomSheet
       bottomSheetRef={bottomSheetRef}

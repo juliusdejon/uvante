@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 import BookRide from 'containers/BookRide';
-import Map from 'components/MapView';
+import Map from 'containers/Map';
 
 
 export default function App() {
