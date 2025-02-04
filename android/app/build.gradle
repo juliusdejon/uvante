@@ -94,7 +94,7 @@ packagingOptions {
     buildToolsVersion rootProject.ext.buildToolsVersion
     compileSdk rootProject.ext.compileSdkVersion
 
-    namespace 'com.juliusdejon.uvante'
+    namespace "com.uvante"
     defaultConfig {
         applicationId 'com.juliusdejon.uvante'
         minSdkVersion rootProject.ext.minSdkVersion

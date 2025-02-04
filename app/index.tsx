@@ -14,9 +14,13 @@ export default function App() {
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
-      <Map />
-
-      <BottomSheet />
+      <View style={{ flex: 2 }}>
+        <Map />
+      </View>
+      <View style={{ flex: 1 }}>
+        <BottomSheet />
+      </View>
     </GestureHandlerRootView>
+
   );
 }

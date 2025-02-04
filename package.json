@@ -4,7 +4,7 @@
   "description": "**Front-end Developer (React Native) - Technical Assignment**",
   "main": "expo-router/entry",
   "scripts": {
-    "start": "expo start",
+    "start": "expo start --dev-client",
     "android": "expo run:android",
     "server": "node api/server.js",
     "ios": "expo run:ios",
