@@ -18,6 +18,7 @@ const BookRide = () => {
   const [bottomSheetState, setBottomSheetState] = useState(1);
   const minimizeBottomSheet = () => setBottomSheetState(1);
   const maximizeBottomSheet = () => setBottomSheetState(2);
+
   const handleSheetChanges = useCallback((index: number) => {
     setBottomSheetState(index);
   }, []);
