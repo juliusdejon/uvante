@@ -1,5 +1,5 @@
 import React, { useRef, useContext, useEffect } from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, Image } from 'react-native';
 import { AppContext } from 'contexts/AppContext';
 import axios from 'axios';
 import LinearLoader from 'components/LinearLoader';
@@ -32,6 +32,13 @@ const ViewRide = () => {
     }
   }, [data])
 
+  const carImages = {
+    Black: require('../assets/cars/black.avif'),
+    Red: require('../assets/cars/red.avif'),
+    White: require('../assets/cars/white.avif'),
+    Blue: require('../assets/cars/blue.avif'),
+  };
+
   return (
     <BottomSheetModal
       snapPoints={['20%', '30%']}
@@ -43,18 +50,22 @@ const ViewRide = () => {
         <BottomSheetView
           className='flex px-8 py-4 gap-2 h-[160px]'
         >
-          <Text className="font-primary-semibold text-lg">
+          <Text className="font-primary-semibold text-xl">
             Your Driver has Arrived!
           </Text>
-          <View className="w-full flex gap-2 flex-row justify-between">
-            <View>
+          <View className="w-full relative flex gap-2 flex-row justify-between">
+            <View className='w-1/2'>
               <Text className='text-lg font-primary-semibold'>{data?.driver?.name}</Text>
-              <Text className='text-md font-primary'>{data?.driver?.car?.make} {data?.driver?.car?.model}</Text>
+              <Text className='text-md font-primary'>{data?.driver?.car?.make} {data?.driver?.car?.model} {data?.driver?.car?.year}</Text>
               <Text className='text-md font-primary'>{data?.driver?.car?.plate}</Text>
             </View>
-            <View>
-              <Text className='text-md font-primary'>{data?.driver?.car?.color}</Text>
-              <Text className='text-md font-primary'>{data?.driver?.car?.year}</Text>
+            <View className='w-1/2'>
+              <Image
+                className='ml-auto -mt-12'
+                source={carImages[data?.driver?.car?.color]}
+                style={{ width: 140, height: 140 }}
+                resizeMode='contain'
+              />
             </View>
           </View>
         </BottomSheetView>
