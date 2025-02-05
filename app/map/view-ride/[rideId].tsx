@@ -1,6 +1,5 @@
-import React, { useRef, useContext, useEffect } from 'react';
+import React, { useRef, useEffect } from 'react';
 import { View, Text, Image } from 'react-native';
-import { AppContext } from 'contexts/AppContext';
 import LinearLoader from 'components/LinearLoader';
 import { BottomSheetModal, BottomSheetView } from '@gorhom/bottom-sheet';
 import { useRide, useStartRide } from '@/api/rides';
@@ -13,7 +12,7 @@ const ViewRide = () => {
   const { data: ride } = useRide(rideId);
   const { mutate: startRide } = useStartRide();
 
-
+  console.log(ride)
   useEffect(() => {
     if (ride?.status === 'driver_assigned') {
       bottomSheetModalRef.current.present()
@@ -22,13 +21,6 @@ const ViewRide = () => {
       startRide(rideId)
     }
   }, [ride])
-
-  const carImages = {
-    Black: require('../../../assets/cars/black.avif'),
-    Red: require('../../../assets/cars/red.avif'),
-    White: require('../../../assets/cars/white.avif'),
-    Blue: require('../../../assets/cars/blue.avif'),
-  };
 
   return (
     <BottomSheetModal
@@ -80,6 +72,13 @@ const ViewRide = () => {
       }
     </BottomSheetModal>
   );
+};
+
+const carImages = {
+  Black: require("../../../assets/cars/black.avif"),
+  Red: require("../../../assets/cars/red.avif"),
+  White: require("../../../assets/cars/white.avif"),
+  Blue: require("../../../assets/cars/blue.avif"),
 };
 
 export default ViewRide;

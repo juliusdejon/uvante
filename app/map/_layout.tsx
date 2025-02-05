@@ -13,7 +13,7 @@ export default function MapLayout() {
   return (
     <View style={{ flex: 1 }}>
       <Map />
-      <Slot />
+      <Slot /> {/* This is where the child component will be rendered */}
     </View>
   );
 }

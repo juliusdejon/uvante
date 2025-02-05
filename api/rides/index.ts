@@ -20,7 +20,7 @@ const getRide = async (rideId: number): Promise<Ride> => {
 
 /** Start a ride */
 const startRide = async (rideId: number): Promise<Ride> => {
-  const { data } = await axios.patch<Ride>(`${API_URL}/rides/${rideId}/start`);
+  const { data } = await axios.post<Ride>(`${API_URL}/rides/${rideId}/start`);
   return data;
 };
 

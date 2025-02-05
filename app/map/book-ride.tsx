@@ -14,7 +14,7 @@ const BookRide = () => {
     dropOff,
     setPickUp,
     setDropOff,
-    setRideId } = useContext(AppContext);
+  } = useContext(AppContext);
   const [bottomSheetState, setBottomSheetState] = useState(1);
 
   const handleSheetChanges = useCallback((index: number) => {
@@ -37,13 +37,11 @@ const BookRide = () => {
           dropoff: dropOff
         });
         console.log('Ride booked successfully:', response.data);
-        // setRideId(response.data.ride.id)
         router.push(`/map/view-ride/${response.data.ride.id}`);
         bottomSheetRef.current.close()
       } catch (error) {
         console.error('Error booking ride:', error.response ? error.response.data : error.message);
       }
-
     }
   };
 
