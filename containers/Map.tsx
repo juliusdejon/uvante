@@ -37,15 +37,16 @@ const Map = () => {
         style={styles.map}
       >
         <Camera
-          centerCoordinate={centerCoordinate}
+          centerCoordinate={pickUp && dropOff ? null : centerCoordinate}
           bounds={
             (pickUp && dropOff)
               ? {
                 ne: [Math.max(pickUp[0], dropOff[0]), Math.max(pickUp[1], dropOff[1])],
                 sw: [Math.min(pickUp[0], dropOff[0]), Math.min(pickUp[1], dropOff[1])],
               } : null}
-          animationDuration={1000} // Animation duration in milliseconds
-          animationMode="flyTo"
+          padding={{ paddingTop: 100, paddingBottom: 450, paddingLeft: 100, paddingRight: 100 }}
+          animationDuration={1000}
+          animationMode="easeTo"
         />
         {centerCoordinate && (<PointAnnotation
           id={'1'}
