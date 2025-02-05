@@ -9,8 +9,6 @@ Mapbox.setAccessToken(Config.MAP_BOX_ACCESS_TOKEN);
 
 const Map = () => {
   const [route, setRoute] = useState(null);
-  // const startCoordinate = [-79.252547, 43.747661];
-  // const endCoordinate = [-79.257790, 43.775944];
   const centerCoordinate = [-79.252547, 43.747661];
   const { pickUp, dropOff } = useContext(AppContext)
   useEffect(() => {
