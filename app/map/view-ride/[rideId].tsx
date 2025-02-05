@@ -34,11 +34,11 @@ const ViewRide = () => {
           className='flex px-8 py-4 gap-2 h-[160px]'
         >
           <Text className="font-primary-semibold text-xl">
-            {ride?.status === 'driver_arrived' && 'Your Driver has Arrived!'}
-            {ride?.status === 'ongoing' && 'Your Ride has Started!'}
-            {ride?.status === 'completed' && 'You Reached your Destination!'}
+            {ride?.status === 'driver_arrived' ? 'Your Driver has Arrived!' : null}
+            {ride?.status === 'ongoing' ? 'Your Ride has Started!' : null}
+            {ride?.status === 'completed' ? 'You Reached your Destination!' : null}
           </Text>
-          {ride.status === 'ongoing' && <LinearLoader />}
+          {ride.status === 'ongoing' ? <LinearLoader /> : null}
           <View className="w-full relative flex gap-2 flex-row justify-between">
             <View className='w-1/2'>
               <Text className='text-lg font-primary-semibold'>{ride?.driver?.name}</Text>

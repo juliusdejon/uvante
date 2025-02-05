@@ -10,10 +10,12 @@ export default function MapLayout() {
     navigation.setOptions({ headerShown: false });
   }, [navigation]);
 
+  // Slot is a placeholder for children components
+
   return (
     <View style={{ flex: 1 }}>
       <Map />
-      <Slot /> {/* This is where the child component will be rendered */}
+      <Slot />
     </View>
   );
 }

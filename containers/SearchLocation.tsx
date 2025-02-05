@@ -46,14 +46,14 @@ const SearchLocation: React.FC<SearchLocationProps> = ({ placeholder, setCoordin
         placeholder={placeholder}
       />
 
-      {results.length > 0 && (
+      {results.length > 0 ? (
         <FlatList
           data={results}
           renderItem={renderPlace}
           keyExtractor={(item) => item.id}
           style={{ marginTop: 10 }}
         />
-      )}
+      ) : null}
     </View>
   );
 };

@@ -21,17 +21,18 @@ const Map = () => {
       >
         <CameraView pickUp={pickUp} dropOff={dropOff} />
 
-        {centerCoordinate &&
+        {centerCoordinate ?
           <Marker id="0" coordinate={centerCoordinate} style="w-5 h-5 rounded-full bg-blue-500 border-2 border-white" />
+          : null
         }
         <Marker id="1" coordinate={pickUp} style="w-5 h-5 rounded-full bg-blue-500 border-2 border-white" />
         <Marker id="2" coordinate={dropOff} style="w-5 h-5 rounded-full bg-red-500 border-2 border-white" />
 
-        {route && (
+        {route ? (
           <ShapeSource id="routeSource" shape={route}>
             <LineLayer id="routeLine" style={{ lineColor: 'blue', lineWidth: 4 }} />
           </ShapeSource>
-        )}
+        ) : null}
       </MapView>
     </View>
   );
