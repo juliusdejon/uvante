@@ -5,6 +5,10 @@ import {
   QueryClientProvider,
 } from '@tanstack/react-query'
 
+import {
+  BottomSheetModalProvider,
+} from '@gorhom/bottom-sheet';
+
 import { AppProvider } from 'contexts/AppContext';
 
 import {
@@ -17,6 +21,7 @@ import {
 } from '@expo-google-fonts/poppins';
 
 import "../global.css";
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 const queryClient = new QueryClient()
 
@@ -37,9 +42,13 @@ export default function Layout() {
   return (
     <QueryClientProvider client={queryClient}>
       <AppProvider>
-        <Stack>
-          <Stack.Screen name="home" options={{}} />
-        </Stack>
+        <GestureHandlerRootView style={{ flex: 1 }}>
+          <BottomSheetModalProvider>
+            <Stack>
+              <Stack.Screen name="home" options={{}} />
+            </Stack>
+          </BottomSheetModalProvider>
+        </GestureHandlerRootView>
       </AppProvider>
     </QueryClientProvider>
   );

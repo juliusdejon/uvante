@@ -5,19 +5,21 @@ import { BottomSheetMethods } from '@gorhom/bottom-sheet/lib/typescript/types';
 interface BottomSheetProps {
   children: ReactNode,
   bottomSheetRef?: Ref<BottomSheetMethods>,
-  index?: number,
+  bottomSheetIndex?: number,
+  snapPoints?: Array<number | string>,
   onChange?: (index: number) => void,
 }
 
 const BottomSheet = (props: BottomSheetProps) => {
-  const { children, bottomSheetRef, index, onChange = () => { } } = props;
+  const { children, snapPoints, bottomSheetRef, bottomSheetIndex, onChange = () => { }, ...rest } = props;
 
   return (
     <GorHomBottomSheet
       ref={bottomSheetRef}
-      snapPoints={[400, '100%']}
-      index={index || 0}
+      snapPoints={snapPoints || [400, '100%']}
+      index={bottomSheetIndex}
       onChange={onChange}
+      {...rest}
     >
       <BottomSheetView
         className='flex p-8 gap-2'

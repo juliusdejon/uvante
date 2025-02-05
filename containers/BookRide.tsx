@@ -3,11 +3,12 @@ import { View, Text, Button, Pressable } from 'react-native';
 import BottomSheet from 'components/BottomSheet';
 import SearchLocation from './SearchLocation';
 import { AppContext } from 'contexts/AppContext';
+import axios from 'axios';
 
 const BookRide = () => {
   const bottomSheetRef = useRef(null);
+  const { pickUp, dropOff, setPickUp, setDropOff, setPrice, rideStatus, setRideStatus } = useContext(AppContext);
   const [bottomSheetState, setBottomSheetState] = useState(1);
-  const { pickUp, dropOff, setPickUp, setDropOff } = useContext(AppContext);
 
   const handleSheetChanges = useCallback((index: number) => {
     setBottomSheetState(index);
@@ -20,9 +21,29 @@ const BookRide = () => {
     }
   }, [pickUp, dropOff]);
 
-  const bookRide = () => {
+
+  useEffect(() => {
+    handleSheetChanges(-1)
+    if (rideStatus !== null) {
+      bottomSheetRef.current.close()
+    }
+  }, [rideStatus])
+
+  const bookRide = async () => {
     if (pickUp && dropOff) {
-      console.log('here')
+      try {
+        const response = await axios.post('http://localhost:3000/rides', {
+          passenger: 'Julius',
+          pickup: pickUp,
+          dropoff: dropOff
+        });
+        console.log('Ride booked successfully:', response.data);
+        setPrice(response.data.ride.price)
+        console.log(response.data.ride.status)
+        setRideStatus(response.data.ride.status)
+      } catch (error) {
+        console.error('Error booking ride:', error.response ? error.response.data : error.message);
+      }
 
     }
   };
@@ -30,7 +51,7 @@ const BookRide = () => {
   return (
     <BottomSheet
       bottomSheetRef={bottomSheetRef}
-      index={bottomSheetState}
+      bottomSheetIndex={bottomSheetState}
       onChange={handleSheetChanges}
     >
       <View className="w-full flex flex-col gap-2">

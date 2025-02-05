@@ -1,24 +1,24 @@
 import { useNavigation } from 'expo-router';
 import { useEffect } from 'react';
-import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 import BookRide from 'containers/BookRide';
+import ViewRide from 'containers/ViewRide';
 import Map from 'containers/Map';
 
 
-export default function App() {
+export default function Home() {
+
   const navigation = useNavigation();
 
   useEffect(() => {
     navigation.setOptions({ headerShown: false });
   }, [navigation]);
 
-
-
   return (
-    <GestureHandlerRootView style={{ flex: 1 }}>
-      <Map />
-      <BookRide />
-    </GestureHandlerRootView>
+    [
+      <Map key={0} />,
+      <BookRide key={1} />,
+      <ViewRide key={2} />
+    ]
   );
 }
