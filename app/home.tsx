@@ -4,6 +4,7 @@ import { useEffect } from 'react';
 import BookRide from 'containers/BookRide';
 import ViewRide from 'containers/ViewRide';
 import Map from 'containers/Map';
+import { View } from 'react-native';
 
 
 export default function Home() {
@@ -15,10 +16,10 @@ export default function Home() {
   }, [navigation]);
 
   return (
-    [
-      <Map key={0} />,
-      <BookRide key={1} />,
-      <ViewRide key={2} />
-    ]
+    <View style={{ flex: 1 }}>
+      <Map />
+      <BookRide />
+      <ViewRide />
+    </View>
   );
 }

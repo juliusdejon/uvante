@@ -26,7 +26,7 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 const queryClient = new QueryClient()
 
 export default function Layout() {
-  const [fontsLoaded] = useFonts({
+  const [fontsLoaded, error] = useFonts({
     Poppins_400Regular,
     Poppins_500Medium,
     Poppins_600SemiBold,
@@ -35,6 +35,9 @@ export default function Layout() {
   });
 
   if (!fontsLoaded) {
+    if (error) {
+      console.error('Error loading fonts', error);
+    }
     return null;
   }
 
