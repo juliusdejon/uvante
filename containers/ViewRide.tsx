@@ -1,59 +1,80 @@
-import React, { useState, useCallback, useRef, useContext, useEffect, Ref, MutableRefObject } from 'react';
-import { View, Text, Button, Pressable } from 'react-native';
+import React, { useRef, useContext, useEffect } from 'react';
+import { View, Text } from 'react-native';
 import { AppContext } from 'contexts/AppContext';
 import axios from 'axios';
 import LinearLoader from 'components/LinearLoader';
 import { BottomSheetModal, BottomSheetView } from '@gorhom/bottom-sheet';
+import { useQuery } from '@tanstack/react-query';
+
+const fetchRideDetails = async (rideId) => {
+  if (!rideId) return;
+  const response = await axios.get(`http://localhost:3000/rides/${rideId}`);
+  return response.data;
+};
+
 
 const ViewRide = () => {
   const bottomSheetModalRef = useRef<BottomSheetModal>(null);
-  const { price, rideStatus } = useContext(AppContext);
+  const { rideId } = useContext(AppContext);
+
+  const { data } = useQuery({
+    queryKey: ['rideDetails', rideId],
+    queryFn: () => fetchRideDetails(rideId),
+    refetchInterval: 5000,
+    enabled: !!rideId
+  });
 
   useEffect(() => {
-    if (rideStatus === 'driver_assigned') {
+    if (data?.status === 'driver_assigned') {
       bottomSheetModalRef.current.present()
+    } else if (data?.status === 'driver_arrived') {
+      bottomSheetModalRef.current.snapToIndex(1)
     }
-  }, [rideStatus])
+  }, [data])
 
   return (
     <BottomSheetModal
-      snapPoints={['40%', '50%']}
+      snapPoints={['20%', '30%']}
       index={0}
       enablePanDownToClose={false}
       ref={bottomSheetModalRef}>
-      <BottomSheetView
-        className='flex p-8 gap-8 h-[200px]'
-      >
-        <LinearLoader />
-        <View className="w-full flex gap-2 flex-row justify-between">
-          <Text className="font-primary-semibold text-xl">
-            Confirming your ride
+
+      {data?.status === 'driver_arrived' ?
+        <BottomSheetView
+          className='flex px-8 py-4 gap-2 h-[160px]'
+        >
+          <Text className="font-primary-semibold text-lg">
+            Your Driver has Arrived!
           </Text>
-          <Text className='font-primary-semibold text-2xl'>
-            ${price}
-          </Text>
-        </View>
-      </BottomSheetView>
+          <View className="w-full flex gap-2 flex-row justify-between">
+            <View>
+              <Text className='text-lg font-primary-semibold'>{data?.driver?.name}</Text>
+              <Text className='text-md font-primary'>{data?.driver?.car?.make} {data?.driver?.car?.model}</Text>
+              <Text className='text-md font-primary'>{data?.driver?.car?.plate}</Text>
+            </View>
+            <View>
+              <Text className='text-md font-primary'>{data?.driver?.car?.color}</Text>
+              <Text className='text-md font-primary'>{data?.driver?.car?.year}</Text>
+            </View>
+          </View>
+        </BottomSheetView>
+        :
+        <BottomSheetView
+          className='flex p-8 gap-8 h-[200px]'
+        >
+          <LinearLoader />
+          <View className="w-full flex gap-2 flex-row justify-between">
+            <Text className="font-primary-semibold text-xl">
+              Confirming your ride
+            </Text>
+            <Text className='font-primary-semibold text-2xl'>
+              ${data?.price}
+            </Text>
+          </View>
+        </BottomSheetView>
+      }
     </BottomSheetModal>
   );
 };
 
 export default ViewRide;
-
-
-
-// <BottomSheet
-// bottomSheetRef={bottomSheetRef}
-// bottomSheetIndex={bottomSheetState}
-// snapPoints={[200, '20%']}
-// onChange={handleSheetChanges}
-// >
-// <View className="w-full flex flex-col gap-2">
-//   <Text className="font-primary-bold text-2xl font-bold">Ride Booked!</Text>
-//   <Text className="font-primary-bold text-2xl font-bold">{price}</Text>
-//   <Text className='font-primary text-lg'>
-//     Driver has been assigned
-//   </Text>
-// </View>
-
-// </BottomSheet>

@@ -7,7 +7,12 @@ import axios from 'axios';
 
 const BookRide = () => {
   const bottomSheetRef = useRef(null);
-  const { pickUp, dropOff, setPickUp, setDropOff, setPrice, rideStatus, setRideStatus } = useContext(AppContext);
+  const {
+    pickUp,
+    dropOff,
+    setPickUp,
+    setDropOff,
+    setRideId } = useContext(AppContext);
   const [bottomSheetState, setBottomSheetState] = useState(1);
 
   const handleSheetChanges = useCallback((index: number) => {
@@ -21,14 +26,6 @@ const BookRide = () => {
     }
   }, [pickUp, dropOff]);
 
-
-  useEffect(() => {
-    handleSheetChanges(-1)
-    if (rideStatus !== null) {
-      bottomSheetRef.current.close()
-    }
-  }, [rideStatus])
-
   const bookRide = async () => {
     if (pickUp && dropOff) {
       try {
@@ -38,9 +35,8 @@ const BookRide = () => {
           dropoff: dropOff
         });
         console.log('Ride booked successfully:', response.data);
-        setPrice(response.data.ride.price)
-        console.log(response.data.ride.status)
-        setRideStatus(response.data.ride.status)
+        setRideId(response.data.ride.id)
+        bottomSheetRef.current.close()
       } catch (error) {
         console.error('Error booking ride:', error.response ? error.response.data : error.message);
       }
