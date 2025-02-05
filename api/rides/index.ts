@@ -1,10 +1,10 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
 import axios from "axios";
-import { queryClient } from "../common/api-provider";
 import { Ride } from "./types";
+import { queryClient } from "../common/api-provider";
 
 //TODO: Replace this with ENV
-const API_URL = process.env.API_URL || "http://localhost:3000";
+const API_URL = "http://localhost:3000";
 
 /** Fetch all rides */
 const getRides = async (): Promise<Ride[]> => {

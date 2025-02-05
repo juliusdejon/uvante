@@ -12,7 +12,7 @@ import {
   BottomSheetModalProvider,
 } from '@gorhom/bottom-sheet';
 
-import { APIProvider } from '@/api/common/api-provider';
+import { ApiProvider } from '@/api/common/api-provider';
 import { AppProvider } from 'contexts/AppContext';
 
 import "../global.css";
@@ -37,7 +37,8 @@ export default function RootLayout() {
   return (
     <Providers>
       <Stack>
-        <Stack.Screen name="index" options={{ headerShown: false }} />
+        <Stack.Screen name="map/book-ride" options={{ headerShown: false }} />
+        <Stack.Screen name="map/view-ride/[rideId]" options={{ headerShown: false }} />
       </Stack>
     </Providers>
   );
@@ -45,7 +46,7 @@ export default function RootLayout() {
 
 function Providers({ children }: { children: React.ReactNode }) {
   return (
-    <APIProvider>
+    <ApiProvider>
       <AppProvider>
         <GestureHandlerRootView style={{ flex: 1 }}>
           <BottomSheetModalProvider>
@@ -53,6 +54,6 @@ function Providers({ children }: { children: React.ReactNode }) {
           </BottomSheetModalProvider>
         </GestureHandlerRootView>
       </AppProvider>
-    </APIProvider>
+    </ApiProvider>
   )
 }

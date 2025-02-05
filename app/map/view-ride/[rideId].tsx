@@ -4,10 +4,12 @@ import { AppContext } from 'contexts/AppContext';
 import LinearLoader from 'components/LinearLoader';
 import { BottomSheetModal, BottomSheetView } from '@gorhom/bottom-sheet';
 import { useRide, useStartRide } from '@/api/rides';
+import { useLocalSearchParams } from 'expo-router';
 
 const ViewRide = () => {
   const bottomSheetModalRef = useRef<BottomSheetModal>(null);
-  const { rideId } = useContext(AppContext);
+  const params = useLocalSearchParams();
+  const rideId = Number(params.rideId);
   const { data: ride } = useRide(rideId);
   const { mutate: startRide } = useStartRide();
 
@@ -22,10 +24,10 @@ const ViewRide = () => {
   }, [ride])
 
   const carImages = {
-    Black: require('../assets/cars/black.avif'),
-    Red: require('../assets/cars/red.avif'),
-    White: require('../assets/cars/white.avif'),
-    Blue: require('../assets/cars/blue.avif'),
+    Black: require('../../../assets/cars/black.avif'),
+    Red: require('../../../assets/cars/red.avif'),
+    White: require('../../../assets/cars/white.avif'),
+    Blue: require('../../../assets/cars/blue.avif'),
   };
 
   return (

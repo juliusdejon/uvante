@@ -1,11 +1,13 @@
 import React, { useState, useCallback, useRef, useContext, useEffect } from 'react';
 import { View, Text, Button, Pressable } from 'react-native';
 import BottomSheet from 'components/BottomSheet';
-import SearchLocation from './SearchLocation';
+import SearchLocation from 'containers/SearchLocation';
 import { AppContext } from 'contexts/AppContext';
 import axios from 'axios';
+import { useRouter } from 'expo-router';
 
 const BookRide = () => {
+  const router = useRouter();
   const bottomSheetRef = useRef(null);
   const {
     pickUp,
@@ -35,7 +37,8 @@ const BookRide = () => {
           dropoff: dropOff
         });
         console.log('Ride booked successfully:', response.data);
-        setRideId(response.data.ride.id)
+        // setRideId(response.data.ride.id)
+        router.push(`/map/view-ride/${response.data.ride.id}`);
         bottomSheetRef.current.close()
       } catch (error) {
         console.error('Error booking ride:', error.response ? error.response.data : error.message);
