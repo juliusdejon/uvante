@@ -30,7 +30,6 @@ const SearchLocation: React.FC<SearchLocationProps> = (props) => {
   };
 
   const renderPlace: ListRenderItem<Place> = ({ item }) => {
-    console.log(item);
     return (
 
       <TouchableOpacity onPress={() => onSelectPlace(item)}>
