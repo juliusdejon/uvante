@@ -3,9 +3,9 @@ import axios from "axios";
 import { BookRideResponse, Ride } from "./types";
 import { Coordinate } from "types/types";
 import { queryClient } from "../common/api-provider";
+import Config from "config";
 
-//TODO: Replace this with ENV
-const API_URL = "http://localhost:3000";
+const API_URL = Config.API_URL;
 
 /** Fetch all rides */
 const getRides = async (): Promise<Ride[]> => {
