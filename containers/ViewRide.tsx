@@ -4,18 +4,29 @@ import { AppContext } from 'contexts/AppContext';
 import axios from 'axios';
 import LinearLoader from 'components/LinearLoader';
 import { BottomSheetModal, BottomSheetView } from '@gorhom/bottom-sheet';
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 
-const fetchRideDetails = async (rideId) => {
+const fetchRideDetails = async (rideId: number) => {
   if (!rideId) return;
   const response = await axios.get(`http://localhost:3000/rides/${rideId}`);
   return response.data;
 };
 
+const useStartRide = () => {
+  return useMutation({
+    mutationFn: async (rideId: number) => {
+      const response = await axios.post(`http://localhost:3000/rides/${rideId}/start`);
+      return response.data;
+    },
+  });
+};
+
+
 
 const ViewRide = () => {
   const bottomSheetModalRef = useRef<BottomSheetModal>(null);
   const { rideId } = useContext(AppContext);
+  const { mutate: startRide } = useStartRide();
 
   const { data } = useQuery({
     queryKey: ['rideDetails', rideId],
@@ -24,11 +35,15 @@ const ViewRide = () => {
     enabled: !!rideId
   });
 
+  console.log(data);
+
+
   useEffect(() => {
     if (data?.status === 'driver_assigned') {
       bottomSheetModalRef.current.present()
     } else if (data?.status === 'driver_arrived') {
       bottomSheetModalRef.current.snapToIndex(1)
+      startRide(rideId)
     }
   }, [data])
 
@@ -46,13 +61,16 @@ const ViewRide = () => {
       enablePanDownToClose={false}
       ref={bottomSheetModalRef}>
 
-      {data?.status === 'driver_arrived' ?
+      {['driver_arrived', 'ongoing', 'completed'].includes(data?.status) ?
         <BottomSheetView
           className='flex px-8 py-4 gap-2 h-[160px]'
         >
           <Text className="font-primary-semibold text-xl">
-            Your Driver has Arrived!
+            {data?.status === 'driver_arrived' && 'Your Driver has Arrived!'}
+            {data?.status === 'ongoing' && 'Your Ride has Started!'}
+            {data?.status === 'completed' && 'You Reached your Destination!'}
           </Text>
+          {data?.status === 'ongoing' && <LinearLoader />}
           <View className="w-full relative flex gap-2 flex-row justify-between">
             <View className='w-1/2'>
               <Text className='text-lg font-primary-semibold'>{data?.driver?.name}</Text>
