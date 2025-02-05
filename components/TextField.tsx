@@ -21,6 +21,7 @@ const TextField = (props: TextFieldProps) => {
       text-lg
       rounded-2xl
       border
+      ml-auto
       w-full
       p-4
       border-[#EDEDED]
