@@ -1,72 +1,31 @@
-import { View, StyleSheet } from 'react-native';
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext } from 'react';
+import { View } from 'react-native';
 import Mapbox, { Camera, MapView, PointAnnotation, ShapeSource, LineLayer } from '@rnmapbox/maps';
 import Config from 'config';
-import axios from 'axios';
 import { AppContext } from 'contexts/AppContext';
+import { useRoute } from 'hooks/useRoute';
 
 Mapbox.setAccessToken(Config.MAP_BOX_ACCESS_TOKEN);
 
-const Map = () => {
-  const [route, setRoute] = useState(null);
-  const centerCoordinate = [-79.252547, 43.747661];
-  const { pickUp, dropOff } = useContext(AppContext)
-  useEffect(() => {
-    const fetchRoute = async () => {
-      try {
-        const response = await axios.get(
-          `https://api.mapbox.com/directions/v5/mapbox/driving/${pickUp.join(',')};${dropOff.join(',')}?alternatives=true&geometries=geojson&language=en&overview=full&steps=true&access_token=${Config.MAP_BOX_ACCESS_TOKEN}`
-        );
-        setRoute(response.data.routes[0].geometry);
-      } catch (error) {
-        console.error('Error fetching route:', error);
-      }
-    };
+const centerCoordinate = [-79.252547, 43.747661];
 
-    if (pickUp && dropOff) {
-      fetchRoute();
-    }
-  }, [pickUp, dropOff]);
+const Map = () => {
+  const { pickUp, dropOff } = useContext(AppContext);
+  const route = useRoute(pickUp, dropOff);
 
   return (
-    <View style={styles.container}>
+    <View className='flex-1 w-full'>
       <MapView
+        style={{ width: '100%', height: '100%' }}
         zoomEnabled={true}
-        style={styles.map}
       >
-        <Camera
-          centerCoordinate={pickUp && dropOff ? null : centerCoordinate}
-          zoomLevel={pickUp && dropOff ? null : 13}
-          bounds={
-            (pickUp && dropOff)
-              ? {
-                ne: [Math.max(pickUp[0], dropOff[0]), Math.max(pickUp[1], dropOff[1])],
-                sw: [Math.min(pickUp[0], dropOff[0]), Math.min(pickUp[1], dropOff[1])],
-              } : null}
-          padding={{ paddingTop: 100, paddingBottom: 450, paddingLeft: 100, paddingRight: 100 }}
-          animationDuration={1000}
-          animationMode="easeTo"
-        />
-        {centerCoordinate && (<PointAnnotation
-          id={'1'}
-          coordinate={centerCoordinate}
-        >
-          <View style={styles.startMarker} />
-        </PointAnnotation>)}
+        <CameraView pickUp={pickUp} dropOff={dropOff} />
 
-        <PointAnnotation
-          id={'1'}
-          coordinate={pickUp}
-        >
-          <View style={styles.startMarker} />
-        </PointAnnotation>
-
-        <PointAnnotation
-          id={'2'}
-          coordinate={dropOff}
-        >
-          <View style={styles.endMarker} />
-        </PointAnnotation>
+        {centerCoordinate &&
+          <Marker id="0" coordinate={centerCoordinate} style="w-5 h-5 rounded-full bg-blue-500 border-2 border-white" />
+        }
+        <Marker id="1" coordinate={pickUp} style="w-5 h-5 rounded-full bg-blue-500 border-2 border-white" />
+        <Marker id="2" coordinate={dropOff} style="w-5 h-5 rounded-full bg-red-500 border-2 border-white" />
 
         {route && (
           <ShapeSource id="routeSource" shape={route}>
@@ -78,32 +37,32 @@ const Map = () => {
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    width: '100%',
-  },
-  map: {
-    width: '100%',
-    height: '100%',
-  },
 
-  startMarker: {
-    width: 20,
-    height: 20,
-    borderRadius: 10,
-    backgroundColor: '#4285F4',
-    borderWidth: 2,
-    borderColor: '#fff',
-  },
-  endMarker: {
-    width: 20,
-    height: 20,
-    borderRadius: 10,
-    backgroundColor: '#ee5253',
-    borderWidth: 2,
-    borderColor: '#fff',
-  },
-});
+const CameraView = ({ pickUp, dropOff }) => {
+  const bounds = pickUp && dropOff ? {
+    ne: [Math.max(pickUp[0], dropOff[0]), Math.max(pickUp[1], dropOff[1])],
+    sw: [Math.min(pickUp[0], dropOff[0]), Math.min(pickUp[1], dropOff[1])],
+  } : null;
+
+  return (
+    <Camera
+      centerCoordinate={pickUp && dropOff ? null : centerCoordinate}
+      zoomLevel={pickUp && dropOff ? null : 13}
+      bounds={bounds}
+      padding={{ paddingTop: 100, paddingBottom: 450, paddingLeft: 100, paddingRight: 100 }}
+      animationDuration={1000}
+      animationMode="easeTo"
+    />
+  );
+};
+
+const Marker = ({ id, coordinate, style }) => (
+  <PointAnnotation id={id} coordinate={coordinate}>
+    <View className={style} />
+  </PointAnnotation>
+);
+
 
 export default Map;
+
+
