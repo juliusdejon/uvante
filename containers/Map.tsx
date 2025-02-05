@@ -4,6 +4,8 @@ import Mapbox, { Camera, MapView, PointAnnotation, ShapeSource, LineLayer } from
 import Config from 'config';
 import { AppContext } from 'contexts/AppContext';
 import { useRoute } from 'hooks/useRoute';
+import Dot from 'components/Dot';
+import Pin from 'components/Pin';
 
 Mapbox.setAccessToken(Config.MAP_BOX_ACCESS_TOKEN);
 
@@ -22,11 +24,11 @@ const Map = () => {
         <CameraView pickUp={pickUp} dropOff={dropOff} />
 
         {centerCoordinate ?
-          <Marker id="0" coordinate={centerCoordinate} style="w-5 h-5 rounded-full bg-blue-500 border-2 border-white" />
+          <Marker id="0" coordinate={centerCoordinate} Icon={<Dot />} />
           : null
         }
-        <Marker id="1" coordinate={pickUp} style="w-5 h-5 rounded-full bg-blue-500 border-2 border-white" />
-        <Marker id="2" coordinate={dropOff} style="w-5 h-5 rounded-full bg-red-500 border-2 border-white" />
+        <Marker id="1" coordinate={pickUp} Icon={<Dot />} />
+        <Marker id="2" coordinate={dropOff} Icon={<Pin />} />
 
         {route ? (
           <ShapeSource id="routeSource" shape={route}>
@@ -57,9 +59,9 @@ const CameraView = ({ pickUp, dropOff }) => {
   );
 };
 
-const Marker = ({ id, coordinate, style }) => (
+const Marker = ({ id, coordinate, Icon }) => (
   <PointAnnotation id={id} coordinate={coordinate}>
-    <View className={style} />
+    {Icon}
   </PointAnnotation>
 );
 

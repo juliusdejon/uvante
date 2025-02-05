@@ -1,22 +1,37 @@
-import { TextInput, TextInputProps } from 'react-native'
+import { TextInput, TextInputProps, View } from 'react-native'
+import { EvilIcons } from '@expo/vector-icons'
 import React from 'react'
-
+import Dot from './Dot'
 interface TextFieldProps extends TextInputProps {
-  textFieldRef: React.LegacyRef<TextInput>;
+  Icon?: React.ReactNode,
+  textFieldRef: React.RefObject<TextInput>;
 }
 
 const TextField = (props: TextFieldProps) => {
-  const { textFieldRef, placeholder, value, onChangeText, ...rest } = props;
+  const { Icon, textFieldRef, placeholder, value, onChangeText, ...rest } = props;
+  const isFocused = textFieldRef?.current?.isFocused();
   return (
-    <TextInput
-      ref={textFieldRef}
-      className="font-primary-medium border rounded-lg border-1 border-gray-300 mt-4 bg-white text-lg px-6 p-4 pb-6 font-medium shadow-sm"
-      placeholder={placeholder}
-      placeholderTextColor="#A0A0A0"
-      onChangeText={onChangeText}
-      value={value}
-      {...rest}
-    />
+    <View className={`flex gap-4 flex-row items-center ${Icon ? 'w-[90%]' : 'w-full'}`}>
+      {Icon}
+      <TextInput
+        ref={textFieldRef}
+        className={`
+      ${isFocused ? 'bg-white' : 'bg-[#F9F9F9]'}
+      font-primary-medium
+      text-lg
+      rounded-2xl
+      border
+      w-full
+      p-4
+      border-[#EDEDED]
+       `}
+        placeholder={placeholder}
+        placeholderTextColor="#656565"
+        onChangeText={onChangeText}
+        value={value}
+        {...rest}
+      />
+    </View>
   )
 }
 

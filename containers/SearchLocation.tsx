@@ -6,12 +6,14 @@ import { Place, Coordinate } from 'types/types';
 import { useLocationSearch } from 'hooks/useLocationSearch';
 
 interface SearchLocationProps {
+  Icon: React.ReactNode;
   placeholder: string;
   setCoordinates: (coordinates: Coordinate) => void;
   onTouchEnd: () => void;
 }
 
-const SearchLocation: React.FC<SearchLocationProps> = ({ placeholder, setCoordinates, onTouchEnd }) => {
+const SearchLocation: React.FC<SearchLocationProps> = (props) => {
+  const { Icon, placeholder, setCoordinates, onTouchEnd } = props;
   const [location, setLocation] = useState<string>('');
   const [placeSelected, setPlaceSelected] = useState<boolean>(false);
   const debouncedLocation = useDebounce(location, 500);
@@ -27,15 +29,21 @@ const SearchLocation: React.FC<SearchLocationProps> = ({ placeholder, setCoordin
     textFieldRef.current?.blur();
   };
 
-  const renderPlace: ListRenderItem<Place> = ({ item }) => (
-    <TouchableOpacity onPress={() => onSelectPlace(item)}>
-      <Text className="font-primary-medium text-lg py-2 px-4">{item.place_name}</Text>
-    </TouchableOpacity>
-  );
+  const renderPlace: ListRenderItem<Place> = ({ item }) => {
+    console.log(item);
+    return (
+
+      <TouchableOpacity onPress={() => onSelectPlace(item)}>
+        <Text className="font-primary-medium text-lg py-2 px-4">{item.place_name}</Text>
+      </TouchableOpacity>
+    )
+  };
+
 
   return (
-    <View>
+    <View className=''>
       <TextField
+        Icon={Icon}
         textFieldRef={textFieldRef}
         value={location}
         onChangeText={(text: string) => {
@@ -45,15 +53,16 @@ const SearchLocation: React.FC<SearchLocationProps> = ({ placeholder, setCoordin
         onTouchEnd={onTouchEnd}
         placeholder={placeholder}
       />
-
-      {results.length > 0 ? (
-        <FlatList
-          data={results}
-          renderItem={renderPlace}
-          keyExtractor={(item) => item.id}
-          style={{ marginTop: 10 }}
-        />
-      ) : null}
+      <View className='ml-6'>
+        {results.length > 0 ? (
+          <FlatList
+            data={results}
+            renderItem={renderPlace}
+            keyExtractor={(item) => item.id}
+            style={{ marginTop: 10 }}
+          />
+        ) : null}
+      </View>
     </View>
   );
 };
