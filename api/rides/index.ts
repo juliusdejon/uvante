@@ -1,6 +1,7 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
 import axios from "axios";
-import { Ride } from "./types";
+import { BookRideResponse, Ride } from "./types";
+import { Coordinate } from "types/types";
 import { queryClient } from "../common/api-provider";
 
 //TODO: Replace this with ENV
@@ -15,6 +16,24 @@ const getRides = async (): Promise<Ride[]> => {
 /** Fetch a single ride */
 const getRide = async (rideId: number): Promise<Ride> => {
   const { data } = await axios.get<Ride>(`${API_URL}/rides/${rideId}`);
+  return data;
+};
+
+/** Book ride */
+const bookRide = async ({
+  passenger,
+  pickup,
+  dropoff,
+}: {
+  passenger: string;
+  pickup: Coordinate;
+  dropoff: Coordinate;
+}): Promise<BookRideResponse> => {
+  const { data } = await axios.post<BookRideResponse>(`${API_URL}/rides`, {
+    passenger,
+    pickup,
+    dropoff,
+  });
   return data;
 };
 
@@ -37,6 +56,25 @@ export const useRide = (rideId: number) => {
     queryFn: () => getRide(rideId),
     refetchInterval: 5000, // Polling every 5 seconds
     enabled: !!rideId,
+  });
+};
+
+export const useBookRide = ({
+  onSuccess,
+}: {
+  onSuccess: (rideId: number) => void;
+}) => {
+  return useMutation<
+    BookRideResponse,
+    unknown,
+    { passenger: string; pickup: Coordinate; dropoff: Coordinate }
+  >({
+    mutationKey: ["rides"],
+    mutationFn: bookRide,
+    onSuccess: (data: BookRideResponse) => {
+      onSuccess(data.ride.id);
+      queryClient.invalidateQueries({ queryKey: ["rides"] });
+    },
   });
 };
 

@@ -1,10 +1,10 @@
 import React, { useState, useCallback, useRef, useContext, useEffect } from 'react';
-import { View, Text, Button, Pressable } from 'react-native';
+import { View, Text, Pressable } from 'react-native';
 import BottomSheet from 'components/BottomSheet';
 import SearchLocation from 'containers/SearchLocation';
 import { AppContext } from 'contexts/AppContext';
-import axios from 'axios';
 import { useRouter } from 'expo-router';
+import { useBookRide } from '@/api/rides';
 
 const BookRide = () => {
   const router = useRouter();
@@ -16,34 +16,33 @@ const BookRide = () => {
     setDropOff,
   } = useContext(AppContext);
   const [bottomSheetState, setBottomSheetState] = useState(1);
-
+  const minimizeBottomSheet = () => setBottomSheetState(1);
+  const maximizeBottomSheet = () => setBottomSheetState(2);
   const handleSheetChanges = useCallback((index: number) => {
     setBottomSheetState(index);
   }, []);
 
-  const handleTouchEnd = () => setBottomSheetState(2);
+  const { mutate: bookRide } = useBookRide({
+    onSuccess: (rideId: number) => {
+      router.push(`/map/view-ride/${rideId}`);
+    }
+  });
+
   useEffect(() => {
     if (pickUp && dropOff) {
-      handleSheetChanges(1)
+      minimizeBottomSheet();
     }
   }, [pickUp, dropOff]);
 
-  const bookRide = async () => {
+  const onBookRide = () => {
     if (pickUp && dropOff) {
-      try {
-        const response = await axios.post('http://localhost:3000/rides', {
-          passenger: 'Julius',
-          pickup: pickUp,
-          dropoff: dropOff
-        });
-        console.log('Ride booked successfully:', response.data);
-        router.push(`/map/view-ride/${response.data.ride.id}`);
-        bottomSheetRef.current.close()
-      } catch (error) {
-        console.error('Error booking ride:', error.response ? error.response.data : error.message);
-      }
+      bookRide({
+        passenger: 'Julius',
+        pickup: pickUp,
+        dropoff: dropOff
+      });
     }
-  };
+  }
 
   return (
     <BottomSheet
@@ -57,12 +56,12 @@ const BookRide = () => {
         <SearchLocation
           setCoordinates={setPickUp}
           placeholder="Enter pickup"
-          onTouchEnd={handleTouchEnd}
+          onTouchEnd={maximizeBottomSheet}
         />
         <SearchLocation
           setCoordinates={setDropOff}
           placeholder="Enter drop-off"
-          onTouchEnd={handleTouchEnd}
+          onTouchEnd={maximizeBottomSheet}
         />
         <Pressable
           style={({ pressed }) => [
@@ -71,7 +70,7 @@ const BookRide = () => {
             },
           ]}
           className={`${(pickUp && dropOff) ? 'bg-blue-600' : 'bg-gray-300'} w-full mt-4 h-16 flex  rounded-full items-center justify-center`}
-          onPress={bookRide}>
+          onPress={onBookRide}>
           <Text className='text-white font-primary text-xl font-primary-semibold'>
             Book Ride
           </Text>
