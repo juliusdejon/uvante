@@ -38,6 +38,7 @@ const Map = () => {
       >
         <Camera
           centerCoordinate={pickUp && dropOff ? null : centerCoordinate}
+          zoomLevel={pickUp && dropOff ? null : 13}
           bounds={
             (pickUp && dropOff)
               ? {
