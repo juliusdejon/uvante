@@ -112,7 +112,7 @@ Before you begin, ensure you have met the following requirements:
 
 4. Download application via browser's link
 
-  [https://expo.dev/artifacts/eas/tCAAYJjgwTDLpe1RafiuHZ.tar.gz](https://expo.dev/artifacts/eas/tCAAYJjgwTDLpe1RafiuHZ.tar.gz])
+     [https://expo.dev/artifacts/eas/tCAAYJjgwTDLpe1RafiuHZ.tar.gz](https://expo.dev/artifacts/eas/tCAAYJjgwTDLpe1RafiuHZ.tar.gz])
 
 5. Install app in Simulator
 
@@ -121,7 +121,11 @@ Before you begin, ensure you have met the following requirements:
    open -a Simulator
    xcrun simctl install booted uvante.app --verbose
    ```   
+6. Open the app
 
+   ```
+   xcrun simctl launch booted com.juliusdejon.uvante
+   ```
 ## Deployment
 
 1. Build
