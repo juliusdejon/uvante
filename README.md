@@ -114,13 +114,9 @@ Before you begin, ensure you have met the following requirements:
 4. Build (IOS) - Open another terminal
    ```bash
    cd ../
+   expo prebuild
+   (cd ios && pod install)
    yarn ios
-   ```
-
-6. Run build
-
-   ```bash
-   eas build:run -p ios
    ```
 
 ## Deployment
