@@ -16,6 +16,7 @@ const BookRide = () => {
     dropOff,
     setPickUp,
     setDropOff,
+    setRideId,
   } = useContext(AppContext);
   const [bottomSheetState, setBottomSheetState] = useState(1);
   const minimizeBottomSheet = () => setBottomSheetState(1);
@@ -28,6 +29,7 @@ const BookRide = () => {
   const { mutate: bookRide } = useBookRide({
     onSuccess: (rideId: number) => {
       router.push(`/map/view-ride/${rideId}`);
+      setRideId(rideId);
     }
   });
 

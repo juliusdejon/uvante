@@ -1,5 +1,5 @@
-import React, { useRef, useState } from 'react';
-import { View, Text, TouchableOpacity, FlatList, ListRenderItem } from 'react-native';
+import React, { MutableRefObject, useRef, useState } from 'react';
+import { View, Text, TouchableOpacity, FlatList, ListRenderItem, TextInput } from 'react-native';
 import TextField from 'components/TextField';
 import useDebounce from 'hooks/useDebounce';
 import { Place, Coordinate } from 'types/types';
@@ -17,7 +17,7 @@ const SearchLocation: React.FC<SearchLocationProps> = (props) => {
   const [location, setLocation] = useState<string>('');
   const [placeSelected, setPlaceSelected] = useState<boolean>(false);
   const debouncedLocation = useDebounce(location, 500);
-  const textFieldRef = useRef<any>(null);
+  const textFieldRef = useRef<TextInput>(null);
 
   const { results, setResults } = useLocationSearch(debouncedLocation, placeSelected);
 

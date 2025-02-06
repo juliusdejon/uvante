@@ -1,7 +1,5 @@
 import { TextInput, TextInputProps, View } from 'react-native'
-import { EvilIcons } from '@expo/vector-icons'
 import React from 'react'
-import Dot from './Dot'
 interface TextFieldProps extends TextInputProps {
   Icon?: React.ReactNode,
   textFieldRef: React.RefObject<TextInput>;
