@@ -91,44 +91,56 @@ Before you begin, ensure you have met the following requirements:
 
 1. Clone repository
 
-```bash
-git clone https://github.com/juliusdejon/uvante
-```
+   ```bash
+   git clone https://github.com/juliusdejon/uvante
+   ```
 
 2. Install dependencies
 
-```bash
-cd uvante
-yarn install
-(cd server && yarn install)
-```
+   ```bash
+   cd uvante
+   yarn install
+   (cd server && yarn install)
+   ```
 
 3. Run the Server locally
 
-```bash
-cd server
-yarn start
-```
+   ```bash
+   cd server
+   yarn start
+   ```
 
-Mock server running on http://localhost:3000
 
-4. Download EAS build (Copy and Paste to any Browser)
+4. Build (IOS) - Open another terminal
+   ```bash
+   cd ../
+   yarn ios
+   ```
 
-```bash
-https://expo.dev/artifacts/eas/tCAAYJjgwTDLpe1RafiuHZ.tar.gz
+6. Run build
 
-```
+   ```bash
+   eas build:run -p ios
+   ```
 
-5. Run build
+## Deployment
 
-```bash
-eas build:run -p ios
-```
+1. Build
+   ```bash
+   eas login
+   eas build -p ios --profile preview
+   ```
+2. Run the build in Simulator
+
+   ```bash
+   eas build:run -p ios
+   ```
+
 
 ## Running Tests
 
 To run tests, run the following command
 
-```bash
-  yarn test
-```
+   ```bash
+     yarn test
+   ```
