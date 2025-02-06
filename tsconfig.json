@@ -5,7 +5,8 @@
     "paths": {
       "components/*": ["components/*"],
       "containers/*": ["containers/*"],
-      "@/api/*": ["api/*"]
+      "@/api/*": ["api/*"],
+      "@/config/*": ["config/*"]
     }
   }
 }

@@ -1,35 +1,30 @@
-import React, { ReactNode, Ref, } from 'react';
-import GorHomBottomSheet, { BottomSheetView } from '@gorhom/bottom-sheet';
+import React, { ReactNode, Ref } from 'react';
+import BottomSheet, { BottomSheetView } from '@gorhom/bottom-sheet';
 import { BottomSheetMethods } from '@gorhom/bottom-sheet/lib/typescript/types';
 
 interface BottomSheetProps {
-  children: ReactNode,
-  bottomSheetRef?: Ref<BottomSheetMethods>,
-  bottomSheetIndex?: number,
-  snapPoints?: Array<number | string>,
-  onChange?: (index: number) => void,
+  children: ReactNode;
+  bottomSheetIndex?: number;
+  snapPoints?: Array<number | string>;
+  onChange?: (index: number) => void;
 }
 
-const BottomSheet = (props: BottomSheetProps) => {
-  const { children, snapPoints, bottomSheetRef, bottomSheetIndex, onChange = () => { }, ...rest } = props;
+const CustomBottomSheet = React.forwardRef((props: BottomSheetProps, ref: Ref<BottomSheetMethods>) => {
+  const { children, snapPoints = [400, '100%'], bottomSheetIndex, onChange = () => { }, ...rest } = props;
 
   return (
-    <GorHomBottomSheet
-      ref={bottomSheetRef}
-      snapPoints={snapPoints || [400, '100%']}
+    <BottomSheet
+      ref={ref}
+      snapPoints={snapPoints}
       index={bottomSheetIndex}
       onChange={onChange}
       {...rest}
     >
-      <BottomSheetView
-        className='flex p-8 gap-2'
-      >
+      <BottomSheetView className="flex p-8 gap-2">
         {children}
       </BottomSheetView>
-    </GorHomBottomSheet>
+    </BottomSheet>
   );
-};
+});
 
-
-
-export default BottomSheet;
+export default CustomBottomSheet;

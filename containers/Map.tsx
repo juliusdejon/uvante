@@ -1,7 +1,7 @@
 import React, { useContext, useState, useEffect, } from 'react';
 import { View } from 'react-native';
 import Mapbox, { Camera, MapView, PointAnnotation, ShapeSource, LineLayer } from '@rnmapbox/maps';
-import Config from 'config';
+import Config from '@/config/index';
 import { AppContext } from 'contexts/AppContext';
 import { useRoute } from 'hooks/useRoute';
 import Dot from 'components/Dot';

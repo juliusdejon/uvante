@@ -3,7 +3,7 @@ import axios from "axios";
 import { BookRideResponse, Ride } from "./types";
 import { Coordinate } from "types/types";
 import { queryClient } from "../common/api-provider";
-import Config from "config";
+import Config from "@/config/index";
 
 const API_URL = Config.API_URL;
 
