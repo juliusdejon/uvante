@@ -35,25 +35,15 @@ export default function RootLayout() {
   }
 
   return (
-    <Providers>
-      <Stack>
-        <Stack.Screen name="map/book-ride" options={{ headerShown: false }} />
-        <Stack.Screen name="map/view-ride/[rideId]" options={{ headerShown: false }} />
-      </Stack>
-    </Providers>
-  );
-}
-
-function Providers({ children }: { children: React.ReactNode }) {
-  return (
     <ApiProvider>
       <AppProvider>
         <GestureHandlerRootView style={{ flex: 1 }}>
           <BottomSheetModalProvider>
-            {children}
+            <Stack />
           </BottomSheetModalProvider>
         </GestureHandlerRootView>
       </AppProvider>
     </ApiProvider>
-  )
+  );
 }
+
