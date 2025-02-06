@@ -11,16 +11,16 @@ import { Coordinate } from 'types/types';
 
 Mapbox.setAccessToken(Config.MAP_BOX_ACCESS_TOKEN);
 
-const centerCoordinate: Coordinate = [-79.252547, 43.747661];
+const currentLocation: Coordinate = [-79.252547, 43.747661];
 
 const Map = () => {
   const { pickUp, dropOff, rideId } = useContext(AppContext);
   const route = useRoute(pickUp, dropOff);
   const { data: ride } = useRide(rideId);
 
-  const isAssigned = ride?.status === 'driver_assigned';
-  const hasArrived = ride?.status === 'driver_arrived';
-  const isCompleted = ride?.status === 'completed';
+  const driverAssigned = ride?.status === 'driver_assigned';
+  const driverArrived = ride?.status === 'driver_arrived';
+  const completed = ride?.status === 'completed';
 
   return (
     <View className='flex-1 w-full'>
@@ -31,22 +31,22 @@ const Map = () => {
         <CameraView
           pickUp={pickUp}
           dropOff={dropOff}
-          focusOnPickUpLocation={hasArrived}
-          focusOnDropOffLocation={isCompleted}
-          centerCoordinate={centerCoordinate}
+          focusOnPickUpLocation={driverArrived}
+          focusOnDropOffLocation={completed}
+          centerCoordinate={currentLocation}
         />
 
-        {centerCoordinate ?
-          <Marker id="0" coordinate={centerCoordinate} Icon={<Dot />} />
+        {currentLocation ?
+          <Marker id="0" coordinate={currentLocation} Icon={<Dot />} />
           : null
         }
         <Marker id="1" coordinate={pickUp} Icon={<Dot />} />
         <Marker id="2" coordinate={dropOff} Icon={<Pin />} />
 
-        {route && !isCompleted ? (
+        {route && !completed ? (
           <AnimatedRoute
             route={route}
-            loop={isAssigned ? true : false}
+            loop={driverAssigned ? true : false}
             speed={1.5} />
         ) : null}
       </MapView>
