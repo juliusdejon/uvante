@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState, useEffect, } from 'react';
 import { View } from 'react-native';
 import Mapbox, { Camera, MapView, PointAnnotation, ShapeSource, LineLayer } from '@rnmapbox/maps';
 import Config from 'config';
@@ -31,15 +31,45 @@ const Map = () => {
         <Marker id="2" coordinate={dropOff} Icon={<Pin />} />
 
         {route ? (
-          <ShapeSource id="routeSource" shape={route}>
-            <LineLayer id="routeLine" style={{ lineColor: 'blue', lineWidth: 4 }} />
-          </ShapeSource>
+          <AnimatedRoute route={route} />
         ) : null}
       </MapView>
     </View>
   );
 };
 
+const AnimatedRoute = ({ route }) => {
+  const [dashArray, setDashArray] = useState([0, 120]);
+
+  useEffect(() => {
+    if (!route) return;
+
+    let progress = 0;
+    const totalSteps = 120;
+    let animationFrameId;
+
+    const animateRoute = () => {
+      progress += 2;
+      if (progress > totalSteps) progress = totalSteps;
+
+      setDashArray([progress, 120 - progress]);
+
+      if (progress < totalSteps) {
+        animationFrameId = requestAnimationFrame(animateRoute);
+      }
+    };
+
+    animationFrameId = requestAnimationFrame(animateRoute);
+
+    return () => cancelAnimationFrame(animationFrameId);
+  }, [route]);
+
+  return (
+    <ShapeSource id="routeSource" shape={route}>
+      <LineLayer id="routeLine" style={{ lineColor: 'blue', lineWidth: 4, lineDasharray: dashArray, }} />
+    </ShapeSource>
+  )
+}
 
 const CameraView = ({ pickUp, dropOff }) => {
   const bounds = pickUp && dropOff ? {
