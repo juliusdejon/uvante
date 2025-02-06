@@ -1,4 +1,4 @@
-import React, { MutableRefObject, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { View, Text, TouchableOpacity, FlatList, ListRenderItem, TextInput } from 'react-native';
 import TextField from 'components/TextField';
 import useDebounce from 'hooks/useDebounce';
@@ -31,7 +31,6 @@ const SearchLocation: React.FC<SearchLocationProps> = (props) => {
 
   const renderPlace: ListRenderItem<Place> = ({ item }) => {
     return (
-
       <TouchableOpacity onPress={() => onSelectPlace(item)}>
         <Text className="font-primary-medium text-lg py-2 px-4">{item.place_name}</Text>
       </TouchableOpacity>
@@ -40,7 +39,8 @@ const SearchLocation: React.FC<SearchLocationProps> = (props) => {
 
 
   return (
-    <View className=''>
+    <View>
+
       <TextField
         Icon={Icon}
         textFieldRef={textFieldRef}
@@ -52,6 +52,7 @@ const SearchLocation: React.FC<SearchLocationProps> = (props) => {
         onTouchEnd={onTouchEnd}
         placeholder={placeholder}
       />
+
       <View className='ml-6'>
         {results.length > 0 ? (
           <FlatList
@@ -62,6 +63,7 @@ const SearchLocation: React.FC<SearchLocationProps> = (props) => {
           />
         ) : null}
       </View>
+
     </View>
   );
 };
