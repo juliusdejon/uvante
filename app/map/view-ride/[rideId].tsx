@@ -1,15 +1,18 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useContext } from 'react';
 import { View, Text, Image } from 'react-native';
 import LinearLoader from 'components/LinearLoader';
 import { BottomSheetModal, BottomSheetView } from '@gorhom/bottom-sheet';
 import { useRide, useStartRide } from '@/api/rides';
-import { useLocalSearchParams } from 'expo-router';
+import { useLocalSearchParams, useRouter } from 'expo-router';
 import StarRating from 'components/StarRating';
 import Button from 'components/Button';
+import { AppContext } from 'contexts/AppContext';
 
 const ViewRide = () => {
   const bottomSheetModalRef = useRef<BottomSheetModal>(null);
   const params = useLocalSearchParams();
+  const { resetState } = useContext(AppContext);
+  const router = useRouter();
   const rideId = Number(params.rideId);
   const { data: ride } = useRide(rideId);
   const { mutate: startRide } = useStartRide();
@@ -61,7 +64,10 @@ const ViewRide = () => {
               resizeMode='contain'
             />
           </View>
-          <Button onPress={() => { }}>
+          <Button onPress={() => {
+            resetState();
+            router.push('/map/book-ride')
+          }}>
             Leave a Review
           </Button>
         </BottomSheetView>

@@ -24,6 +24,9 @@ const useRoute = (pickUp: Coordinate, dropOff: Coordinate) => {
       }
     };
 
+    if (!pickUp && !dropOff) {
+      setRoute(null);
+    }
     if (pickUp && dropOff) {
       fetchRoute();
     }

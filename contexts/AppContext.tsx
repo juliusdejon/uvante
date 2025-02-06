@@ -9,6 +9,7 @@ interface AppContextProps {
   setDropOff: React.Dispatch<React.SetStateAction<Coordinate | null>>;
   rideId: number | null;
   setRideId: React.Dispatch<React.SetStateAction<number | null>>;
+  resetState: () => void;
 }
 
 export const AppContext = createContext<AppContextProps | undefined>(undefined);
@@ -18,6 +19,12 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
   const [dropOff, setDropOff] = useState<Coordinate | null>(null);
   const [rideId, setRideId] = useState<number | null>(null);
 
+  const resetState = () => {
+    setPickUp(null);
+    setDropOff(null);
+    setRideId(null);
+  };
+
   return (
     <AppContext.Provider value={{
       pickUp,
@@ -25,7 +32,8 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
       dropOff,
       setDropOff,
       rideId,
-      setRideId
+      setRideId,
+      resetState
     }}>
       {children}
     </AppContext.Provider>
