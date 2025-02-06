@@ -1,11 +1,15 @@
 import React from 'react';
-import { render } from '@testing-library/react-native';
+import { fireEvent, render } from '@testing-library/react-native';
 import BookRide from 'app/map/book-ride';
+import SearchLocation from 'containers/SearchLocation';
+import TextField from 'components/TextField';
 
 
 import { AppContext } from 'contexts/AppContext';
-import { QueryClient, QueryClientProvider, useMutation } from '@tanstack/react-query';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import Pin from 'components/Pin';
+import Dot from 'components/Dot';
 
 
 // Mock BottomSheet and BottomSheetView components
@@ -73,8 +77,10 @@ jest.mock('@tanstack/react-query', () => {
     })),
   };
 });
-describe('Book Ride', () => {
 
+const queryClient = new QueryClient();
+
+const BookRideProviders = ({ children }) => {
   const mockSetPickUp = jest.fn();
   const mockSetDropOff = jest.fn();
   const mockSetRideId = jest.fn();
@@ -95,23 +101,68 @@ describe('Book Ride', () => {
     }),
   }));
 
+  return (
 
-  const queryClient = new QueryClient();
-
+    <QueryClientProvider client={queryClient}>
+      <AppContext.Provider value={mockContextValue}>
+        <GestureHandlerRootView>
+          {children}
+        </GestureHandlerRootView>
+      </AppContext.Provider>
+    </QueryClientProvider>
+  )
+}
+describe('Book Ride', () => {
 
   it('should show booking screen', () => {
 
     const { getByText } = render(
-      <QueryClientProvider client={queryClient}>
-        <AppContext.Provider value={mockContextValue}>
-          <GestureHandlerRootView>
-            <BookRide />
-          </GestureHandlerRootView>
-        </AppContext.Provider>
-      </QueryClientProvider>
+      <BookRideProviders>
+        <BookRide />
+      </BookRideProviders>
     );
-
     expect(getByText('Hey Julius,')).toBeTruthy();
     expect(getByText('Where are you going?')).toBeTruthy();
   });
+
+  describe('SearchLocation', () => {
+    it('should display Choose pick up point', () => {
+      const { getByPlaceholderText } = render(
+        <BookRideProviders>
+          <SearchLocation Icon={<Dot />} placeholder="Choose pick up point" setCoordinates={() => { }} onTouchEnd={() => { }} />
+        </BookRideProviders>
+      );
+      expect(getByPlaceholderText('Choose pick up point')).toBeTruthy();
+    });
+
+
+
+    it('should display Enter drop-off location', () => {
+      const { getByPlaceholderText } = render(
+        <BookRideProviders>
+          <SearchLocation Icon={<Pin />} placeholder="Enter drop-off location" setCoordinates={() => { }} onTouchEnd={() => { }} />
+        </BookRideProviders>
+      );
+      expect(getByPlaceholderText('Enter drop-off location')).toBeTruthy();
+    });
+
+    describe('TextField', () => {
+      it('update textfield', async () => {
+        const mockOnChangeText = jest.fn();
+        const { getByTestId } = render(
+          <BookRideProviders>
+            <TextField value="" onChangeText={mockOnChangeText} />
+          </BookRideProviders>
+        );
+
+        const input = getByTestId('u-txtField');
+
+        fireEvent.changeText(input, '713 Brimley Rd');
+
+        expect(mockOnChangeText).toHaveBeenCalledWith('713 Brimley Rd');
+      });
+    })
+
+  })
+
 });

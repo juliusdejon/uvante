@@ -42,8 +42,9 @@ const SearchLocation: React.FC<SearchLocationProps> = (props) => {
     <View>
 
       <TextField
+        ref={textFieldRef}
+        testID='u-txt-search-location'
         Icon={Icon}
-        textFieldRef={textFieldRef}
         value={location}
         onChangeText={(text: string) => {
           setLocation(text);

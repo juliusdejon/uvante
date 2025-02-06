@@ -61,7 +61,7 @@ const BookRide: React.FC = () => {
           <Text className="font-primary-semibold text-md">Hey Julius,</Text>
           <Text className="font-primary-semibold text-xl font-bold">Where are you going?</Text>
           <View className='flex flex-col mt-4 gap-4'>
-            {/* 
+
             <SearchLocation
               Icon={<Dot />}
               setCoordinates={setPickUp}
@@ -73,7 +73,7 @@ const BookRide: React.FC = () => {
               setCoordinates={setDropOff}
               placeholder="Choose your destination"
               onTouchEnd={maximizeBottomSheet}
-            /> */}
+            />
           </View>
           <Button
             onPress={onBookRide}
