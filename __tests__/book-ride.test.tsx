@@ -125,6 +125,17 @@ describe('Book Ride', () => {
     expect(getByText('Where are you going?')).toBeTruthy();
   });
 
+  it('should show display the book ride button', () => {
+
+    const { getByText } = render(
+      <BookRideProviders>
+        <BookRide />
+      </BookRideProviders>
+    );
+    expect(getByText('Book Ride')).toBeTruthy();
+  });
+
+
   describe('SearchLocation', () => {
     it('should display Choose pick up point', () => {
       const { getByPlaceholderText } = render(
@@ -147,7 +158,7 @@ describe('Book Ride', () => {
     });
 
     describe('TextField', () => {
-      it('update textfield', async () => {
+      it('should update the textfield', async () => {
         const mockOnChangeText = jest.fn();
         const { getByTestId } = render(
           <BookRideProviders>
@@ -162,6 +173,9 @@ describe('Book Ride', () => {
         expect(mockOnChangeText).toHaveBeenCalledWith('713 Brimley Rd');
       });
     })
+
+
+
 
   })
 

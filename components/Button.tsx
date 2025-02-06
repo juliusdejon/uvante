@@ -17,7 +17,7 @@ const Button = (props: ButtonProps) => {
       ]}
       className={`bg-blue-600 ${className} w-full mt-6 h-[48] flex  rounded-full items-center justify-center`}
       onPress={onPress}>
-      <Text className='text-white font-primary text-xl font-primary-semibold'>
+      <Text className='text-white font-primary text-xl font-primary-semibold' >
         {children}
       </Text>
     </Pressable>
