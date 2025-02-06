@@ -111,7 +111,7 @@ Before you begin, ensure you have met the following requirements:
    ```
 
 
-4. Build (IOS) - Open another terminal
+4. Running the App inside of Simulator
    ```bash
    cd ../
    expo prebuild
