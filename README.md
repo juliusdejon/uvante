@@ -110,15 +110,17 @@ Before you begin, ensure you have met the following requirements:
    yarn start
    ```
 
-4. Open another terminal tab
+4. Download application via browser's link
 
-5. Running the App inside of Simulator
+  [https://expo.dev/artifacts/eas/tCAAYJjgwTDLpe1RafiuHZ.tar.gz](https://expo.dev/artifacts/eas/tCAAYJjgwTDLpe1RafiuHZ.tar.gz])
+
+5. Install app in Simulator
+
    ```bash
-   cd ../
-   expo prebuild
-   (cd ios && pod install)
-   yarn ios
-   ```
+   tar -xzvf application-dfc2d82d-3293-4308-a7be-56e07cf38cdb.tar.gz
+   open -a Simulator
+   xcrun simctl install booted uvante.app --verbose
+   ```   
 
 ## Deployment
 
