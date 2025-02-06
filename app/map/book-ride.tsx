@@ -7,6 +7,7 @@ import { useRouter } from 'expo-router';
 import { useBookRide } from '@/api/rides';
 import Dot from 'components/Dot';
 import Pin from 'components/Pin';
+import Button from 'components/Button';
 
 const BookRide = () => {
   const router = useRouter();
@@ -73,19 +74,11 @@ const BookRide = () => {
             onTouchEnd={maximizeBottomSheet}
           />
         </View>
-        <Pressable
-          style={({ pressed }) => [
-            {
-              backgroundColor: pressed ? 'black' : 'grey',
-            },
-          ]}
-          className={`${(pickUp && dropOff) ? 'bg-blue-600' : 'bg-gray-300'} w-full mt-6 h-[48] flex  rounded-full items-center justify-center`}
-          onPress={onBookRide}>
-          <Text className='text-white font-primary text-xl font-primary-semibold'>
-            Book Ride
-          </Text>
-        </Pressable>
-
+        <Button
+          onPress={onBookRide}
+          className={`${(pickUp && dropOff) ? 'bg-blue-600' : 'bg-gray-300'}`}>
+          Book Ride
+        </Button>
       </View>
     </BottomSheet>
   );
