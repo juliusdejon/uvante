@@ -31,42 +31,52 @@ const Map = () => {
         <Marker id="2" coordinate={dropOff} Icon={<Pin />} />
 
         {route ? (
-          <AnimatedRoute route={route} />
+          <AnimatedRoute route={route} loop={false} speed={1.5} />
         ) : null}
       </MapView>
     </View>
   );
 };
 
-const AnimatedRoute = ({ route }) => {
-  const [dashArray, setDashArray] = useState([0, 120]);
+const AnimatedRoute = ({ route, loop = false, speed = 1 }: {
+  route: any;
+  loop: boolean;
+  speed?: number;
+}) => {
+
+  const [dashArray, setDashArray] = useState([0, 100]);
 
   useEffect(() => {
     if (!route) return;
-
     let progress = 0;
-    const totalSteps = 120;
+    const totalSteps = 100;
     let animationFrameId;
-
     const animateRoute = () => {
-      progress += 2;
-      if (progress > totalSteps) progress = totalSteps;
-
-      setDashArray([progress, 120 - progress]);
-
-      if (progress < totalSteps) {
-        animationFrameId = requestAnimationFrame(animateRoute);
+      progress += speed // Adjust speed here
+      if (progress > totalSteps) {
+        if (loop) {
+          progress = 0; // Restart animation
+        } else {
+          return;
+        }
       }
+      setDashArray([progress, 100 - progress]);
+      animationFrameId = requestAnimationFrame(animateRoute);
     };
 
     animationFrameId = requestAnimationFrame(animateRoute);
 
     return () => cancelAnimationFrame(animationFrameId);
-  }, [route]);
+  }, [route, loop]);
+
 
   return (
     <ShapeSource id="routeSource" shape={route}>
-      <LineLayer id="routeLine" style={{ lineColor: 'blue', lineWidth: 4, lineDasharray: dashArray, }} />
+      <LineLayer id="routeLine" style={{
+        lineColor: 'blue',
+        lineWidth: 4,
+        lineDasharray: dashArray,
+      }} />
     </ShapeSource>
   )
 }
