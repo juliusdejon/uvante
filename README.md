@@ -110,9 +110,9 @@ Before you begin, ensure you have met the following requirements:
    yarn start
    ```
 
-4.Open another terminal tab
+4. Open another terminal tab
 
-5.  Running the App inside of Simulator
+5. Running the App inside of Simulator
    ```bash
    cd ../
    expo prebuild
