@@ -90,6 +90,8 @@ const BookRideProviders = ({ children }) => {
     pickUp: null,
     dropOff: null,
     rideId: null,
+    pickUpAddress: null,
+    setPickUpAddress: jest.fn(),
     setPickUp: mockSetPickUp,
     setDropOff: mockSetDropOff,
     setRideId: mockSetRideId,
@@ -112,14 +114,17 @@ const BookRideProviders = ({ children }) => {
     </QueryClientProvider>
   )
 }
+
+const renderApp = (el: React.ReactElement) => {
+  return render(<BookRideProviders>{el}</BookRideProviders>);
+}
+
 describe('Book Ride', () => {
 
   it('should show booking screen', () => {
 
-    const { getByText } = render(
-      <BookRideProviders>
-        <BookRide />
-      </BookRideProviders>
+    const { getByText } = renderApp(
+      <BookRide />
     );
     expect(getByText('Hey Julius,')).toBeTruthy();
     expect(getByText('Where are you going?')).toBeTruthy();
@@ -127,10 +132,8 @@ describe('Book Ride', () => {
 
   it('should show display the book ride button', () => {
 
-    const { getByText } = render(
-      <BookRideProviders>
-        <BookRide />
-      </BookRideProviders>
+    const { getByText } = renderApp(
+      <BookRide />
     );
     expect(getByText('Book Ride')).toBeTruthy();
   });
@@ -138,10 +141,10 @@ describe('Book Ride', () => {
 
   describe('SearchLocation', () => {
     it('should display Choose pick up point', () => {
-      const { getByPlaceholderText } = render(
-        <BookRideProviders>
-          <SearchLocation Icon={<Dot />} placeholder="Choose pick up point" setCoordinates={() => { }} onTouchEnd={() => { }} />
-        </BookRideProviders>
+      const { getByPlaceholderText } = renderApp(
+        <SearchLocation Icon={<Dot />} placeholder="Choose pick up point" setCoordinates={() => { }} onTouchEnd={() => { }} location={''} setLocation={function (location: string): void {
+          throw new Error('Function not implemented.');
+        }} />
       );
       expect(getByPlaceholderText('Choose pick up point')).toBeTruthy();
     });
@@ -149,10 +152,10 @@ describe('Book Ride', () => {
 
 
     it('should display Enter drop-off location', () => {
-      const { getByPlaceholderText } = render(
-        <BookRideProviders>
-          <SearchLocation Icon={<Pin type="dropoff" />} placeholder="Enter drop-off location" setCoordinates={() => { }} onTouchEnd={() => { }} />
-        </BookRideProviders>
+      const { getByPlaceholderText } = renderApp(
+        <SearchLocation Icon={<Pin type="dropoff" />} placeholder="Enter drop-off location" setCoordinates={() => { }} onTouchEnd={() => { }} location={''} setLocation={function (location: string): void {
+          throw new Error('Function not implemented.');
+        }} />
       );
       expect(getByPlaceholderText('Enter drop-off location')).toBeTruthy();
     });
@@ -160,10 +163,8 @@ describe('Book Ride', () => {
     describe('TextField', () => {
       it('should update the textfield', async () => {
         const mockOnChangeText = jest.fn();
-        const { getByTestId } = render(
-          <BookRideProviders>
-            <TextField value="" onChangeText={mockOnChangeText} />
-          </BookRideProviders>
+        const { getByTestId } = renderApp(
+          <TextField value="" onChangeText={mockOnChangeText} />
         );
 
         const input = getByTestId('u-txtField');
