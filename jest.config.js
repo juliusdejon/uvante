@@ -8,6 +8,7 @@ module.exports = {
     "^@/config/(.*)$": "<rootDir>/config/$1",
     "^@/api/(.*)$": "<rootDir>/api/$1",
     "^contexts/(.*)$": "<rootDir>/contexts/$1",
+    "^data/(.*)$": "<rootDir>/data/$1",
   },
   setupFiles: ['<rootDir>/jest.setup.js'],
   transformIgnorePatterns: [
