@@ -4,7 +4,6 @@ import SearchLocation from 'containers/SearchLocation';
 import { AppContext } from 'contexts/AppContext';
 import { useRouter } from 'expo-router';
 import { useBookRide } from '@/api/rides';
-import Dot from 'components/Dot';
 import Pin from 'components/Pin';
 import Button from 'components/Button';
 import BottomSheet, { BottomSheetView } from '@gorhom/bottom-sheet';
@@ -63,13 +62,13 @@ const BookRide: React.FC = () => {
           <View className='flex flex-col mt-4 gap-4'>
 
             <SearchLocation
-              Icon={<Dot />}
+              Icon={<Pin type="pickup" />}
               setCoordinates={setPickUp}
               placeholder="Choose pick up point"
               onTouchEnd={maximizeBottomSheet}
             />
             <SearchLocation
-              Icon={<Pin />}
+              Icon={<Pin type="dropoff" />}
               setCoordinates={setDropOff}
               placeholder="Choose your destination"
               onTouchEnd={maximizeBottomSheet}

@@ -12,7 +12,7 @@ import { Coordinate } from 'types/types';
  */
 
 const Marker = ({ id, coordinate, Icon }) => (
-  <PointAnnotation id={id} coordinate={coordinate}>
+  <PointAnnotation id={id} coordinate={coordinate} draggable={false}>
     {Icon}
   </PointAnnotation>
 );

@@ -1,6 +1,6 @@
-import React, { useContext } from 'react';
+import React, { useCallback, useContext } from 'react';
 import { View } from 'react-native';
-import Mapbox, { MapView } from '@rnmapbox/maps';
+import Mapbox, { MapView, MarkerView, PointAnnotation } from '@rnmapbox/maps';
 import Config from '@/config/index';
 import { AppContext } from 'contexts/AppContext';
 import { useRoute } from 'hooks/useRoute';
@@ -11,6 +11,7 @@ import { Coordinate } from 'types/types';
 import AnimatedRoute from './AnimatedRoute';
 import CameraView from './CameraView';
 import Marker from './Marker';
+import PickupPoint from './PickupPoint';
 
 Mapbox.setAccessToken(Config.MAP_BOX_ACCESS_TOKEN);
 
@@ -24,6 +25,7 @@ const Map = () => {
   const driverAssigned = ride?.status === 'driver_assigned';
   const driverArrived = ride?.status === 'driver_arrived';
   const completed = ride?.status === 'completed';
+
 
   return (
     <View className='flex-1 w-full'>
@@ -43,8 +45,10 @@ const Map = () => {
           <Marker id="0" coordinate={currentLocation} Icon={<Dot />} />
           : null
         }
-        <Marker id="1" coordinate={pickUp} Icon={<Dot />} />
-        <Marker id="2" coordinate={dropOff} Icon={<Pin />} />
+
+        <PickupPoint />
+
+        <Marker id="2" coordinate={dropOff} Icon={<Pin type="dropoff" />} />
 
         {route && !completed ? (
           <AnimatedRoute

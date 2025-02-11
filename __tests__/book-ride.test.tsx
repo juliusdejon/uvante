@@ -151,7 +151,7 @@ describe('Book Ride', () => {
     it('should display Enter drop-off location', () => {
       const { getByPlaceholderText } = render(
         <BookRideProviders>
-          <SearchLocation Icon={<Pin />} placeholder="Enter drop-off location" setCoordinates={() => { }} onTouchEnd={() => { }} />
+          <SearchLocation Icon={<Pin type="dropoff" />} placeholder="Enter drop-off location" setCoordinates={() => { }} onTouchEnd={() => { }} />
         </BookRideProviders>
       );
       expect(getByPlaceholderText('Enter drop-off location')).toBeTruthy();
