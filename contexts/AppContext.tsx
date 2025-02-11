@@ -5,6 +5,8 @@ import { Coordinate } from 'types/types';
 interface AppContextProps {
   pickUp: Coordinate | null;
   setPickUp: React.Dispatch<React.SetStateAction<Coordinate | null>>;
+  pickUpAddress: string | null;
+  setPickUpAddress: React.Dispatch<React.SetStateAction<string>>;
   dropOff: Coordinate | null;
   setDropOff: React.Dispatch<React.SetStateAction<Coordinate | null>>;
   rideId: number | null;
@@ -16,6 +18,7 @@ export const AppContext = createContext<AppContextProps | undefined>(undefined);
 
 export const AppProvider = ({ children }: { children: ReactNode }) => {
   const [pickUp, setPickUp] = useState<Coordinate | null>(null);
+  const [pickUpAddress, setPickUpAddress] = useState<string>('');
   const [dropOff, setDropOff] = useState<Coordinate | null>(null);
   const [rideId, setRideId] = useState<number | null>(null);
 
@@ -29,6 +32,8 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
     <AppContext.Provider value={{
       pickUp,
       setPickUp,
+      pickUpAddress,
+      setPickUpAddress,
       dropOff,
       setDropOff,
       rideId,

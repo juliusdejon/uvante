@@ -16,7 +16,12 @@ const BookRide: React.FC = () => {
     setPickUp,
     setDropOff,
     setRideId,
+    pickUpAddress,
+    setPickUpAddress,
   } = useContext(AppContext);
+
+  const [dropOffLocation, setDropOffLocation] = useState('');
+
   const [bottomSheetState, setBottomSheetState] = useState(1);
   const minimizeBottomSheet = () => setBottomSheetState(1);
   const maximizeBottomSheet = () => setBottomSheetState(2);
@@ -37,6 +42,7 @@ const BookRide: React.FC = () => {
       minimizeBottomSheet();
     }
   }, [pickUp, dropOff]);
+
 
   const onBookRide = () => {
     if (pickUp && dropOff) {
@@ -66,12 +72,16 @@ const BookRide: React.FC = () => {
               setCoordinates={setPickUp}
               placeholder="Choose pick up point"
               onTouchEnd={maximizeBottomSheet}
+              location={pickUpAddress}
+              setLocation={setPickUpAddress}
             />
             <SearchLocation
               Icon={<Pin type="dropoff" />}
               setCoordinates={setDropOff}
               placeholder="Choose your destination"
               onTouchEnd={maximizeBottomSheet}
+              location={dropOffLocation}
+              setLocation={setDropOffLocation}
             />
           </View>
           <Button

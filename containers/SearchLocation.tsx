@@ -10,11 +10,13 @@ interface SearchLocationProps {
   placeholder: string;
   setCoordinates: (coordinates: Coordinate) => void;
   onTouchEnd: () => void;
+  location: string;
+  setLocation: (location: string) => void;
 }
 
 const SearchLocation: React.FC<SearchLocationProps> = (props) => {
-  const { Icon, placeholder, setCoordinates, onTouchEnd } = props;
-  const [location, setLocation] = useState<string>('');
+  const { location, setLocation, Icon, placeholder, setCoordinates, onTouchEnd } = props;
+
   const [placeSelected, setPlaceSelected] = useState<boolean>(false);
   const debouncedLocation = useDebounce(location, 500);
   const textFieldRef = useRef<TextInput>(null);
