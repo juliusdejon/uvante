@@ -4,7 +4,7 @@ import TextField from 'components/TextField';
 import useDebounce from 'hooks/useDebounce';
 import { Place, Coordinate } from 'types/types';
 import { useLocationSearch } from 'hooks/useLocationSearch';
-
+import { placeIcons } from 'data/location';
 interface SearchLocationProps {
   Icon: React.ReactNode;
   placeholder: string;
@@ -29,14 +29,18 @@ const SearchLocation: React.FC<SearchLocationProps> = (props) => {
     textFieldRef.current?.blur();
   };
 
+
   const renderPlace: ListRenderItem<Place> = ({ item }) => {
+    const lastPlaceType = item.place_type[item.place_type.length - 1];
     return (
-      <TouchableOpacity onPress={() => onSelectPlace(item)}>
+      <TouchableOpacity onPress={() => onSelectPlace(item)} className='flex gap-2 flex-row items-center truncate'>
+        <Text>
+          {placeIcons[lastPlaceType] ? placeIcons[lastPlaceType] : null}
+        </Text>
         <Text className="font-primary-medium text-lg py-2 px-4">{item.place_name}</Text>
       </TouchableOpacity>
     )
   };
-
 
   return (
     <View>
